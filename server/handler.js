@@ -62,6 +62,9 @@ const signIn = async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
+  const body = req.body;
+  console.log(body);
+
   const client = new MongoClient(MONGO_URI, options);
   try {
     await client.connect();
