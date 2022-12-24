@@ -52,7 +52,7 @@ express()
   .post("/api/addUser", addUser)
   .post("/api/signIn", signIn)
   .get("/api/getUser/:id", getUser)
-  .get("/api/getAllPostButYours/:userId", getAllPostButYours)
+  .get("/api/getAllPostButYours/:userId/:service", getAllPostButYours)
 
   .get("*", (req, res) => {
     res.status(404).json({

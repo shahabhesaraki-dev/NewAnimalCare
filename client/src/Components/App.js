@@ -3,10 +3,11 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import SignIn from "./Auth/signIn";
 import GlobalStyles from "./GlobalStyles";
 import Home from "./Homepage/home";
-import Bookmarks from "./NavPages/bookmarks";
+// import Bookmarks from "./NavPages/bookmarks";
 import Messages from "./NavPages/messages";
 import ProfilePage from "./Profile/profilePage";
 import AddNewPost from "./NewPost/addNewPost";
+import Service from "./Service/service";
 
 const App = () => {
   const isLogIn = localStorage.getItem("userId");
@@ -15,14 +16,14 @@ const App = () => {
       <GlobalStyles />
       <Switch>
         <Route exact path="/">
-          {!isLogIn ? <SignIn /> : <Redirect exact to="/home" />}
+          {!isLogIn ? <SignIn /> : <Redirect exact to="/services" />}
         </Route>
         <Route path="/home">
           {isLogIn ? <Home /> : <Redirect exact to="/" />}
         </Route>
-        <Route path="/bookmarks">
+        {/* <Route path="/bookmarks">
           {isLogIn ? <Bookmarks /> : <Redirect exact to="/" />}
-        </Route>
+        </Route> */}
         <Route path="/messages">
           {isLogIn ? <Messages /> : <Redirect exact to="/" />}
         </Route>
@@ -31,6 +32,9 @@ const App = () => {
         </Route>
         <Route path="/newPost">
           {isLogIn ? <AddNewPost /> : <Redirect exact to="/" />}
+        </Route>
+        <Route path="/services">
+          {isLogIn ? <Service /> : <Redirect exact to="/" />}
         </Route>
       </Switch>
     </BrowserRouter>

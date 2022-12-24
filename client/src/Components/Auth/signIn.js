@@ -28,7 +28,7 @@ const SignIn = () => {
       .then((result) => {
         if (result.status === 200) {
           localStorage.setItem("userId", JSON.stringify(result.id));
-          history.push("/home");
+          history.push("/services");
           window.location.reload();
         } else {
           setError(result.message);
@@ -164,6 +164,7 @@ const Input = styled.input`
     opacity: 0.5;
   }
   &:focus {
+    outline: none;
     border: 2px solid #240d01;
     &::placeholder {
       position: absolute;

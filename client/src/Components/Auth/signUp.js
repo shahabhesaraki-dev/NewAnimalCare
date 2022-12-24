@@ -46,7 +46,7 @@ const SignUp = () => {
       .then((result) => {
         if (result.status === 200) {
           localStorage.setItem("userId", JSON.stringify(result.id));
-          history.push("/home");
+          history.push("/services");
         } else {
           setError(result.message);
         }

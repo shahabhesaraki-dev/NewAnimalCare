@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import {
   FiHome,
-  FiBookmark,
+  // FiBookmark,
   FiMessageSquare,
   FiUser,
   FiLogOut,
+  FiSettings,
 } from "react-icons/fi";
 import { NavLink, useHistory } from "react-router-dom";
 import { DetailsContext } from "./Context/detailsContext";
@@ -22,7 +23,7 @@ const Header = () => {
   };
 
   return (
-    <>
+    <MainDiv>
       <RightWrapper>
         <Button
           onClick={() => {
@@ -41,12 +42,12 @@ const Header = () => {
                 Home
               </StyledNavlink>
             </Li>
-            <Li>
+            {/* <Li>
               <StyledNavlink to="/bookmarks">
                 <StyledFiBookmark size={30} />
                 Bookmarks
               </StyledNavlink>
-            </Li>
+            </Li> */}
             <Li>
               <StyledNavlink to="/messages">
                 <StyledFiMessageSquare size={30} />
@@ -60,24 +61,47 @@ const Header = () => {
               </StyledNavlink>
             </Li>
             <Li>
+              <StyledNavlink to="/services">
+                <StyledFiSetting size={30} />
+                Services
+              </StyledNavlink>
+            </Li>
+            <Li>
               <LogoutBox onClick={logOutHandler}>
                 <FiLogOut size={25} style={{ position: "relative" }} />
-                <Logout>LogOut({userData.firstName})</Logout>
+                <Logout>
+                  LogOut(
+                  {userData.firstName
+                    ? userData.firstName.replace(
+                        /^./,
+                        userData.firstName[0].toUpperCase()
+                      )
+                    : null}
+                  )
+                </Logout>
               </LogoutBox>
             </Li>
           </ul>
         </nav>
       </LeftWrapper>
-    </>
+    </MainDiv>
   );
 };
+
+const MainDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  @media (max-width: 950px) {
+    width: 40%;
+  }
+`;
 
 const RightWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: left;
   position: fixed;
-  min-width: 30%;
   top: 50px;
   left: 30px;
 `;
@@ -89,12 +113,12 @@ const Button = styled.button`
   border: none;
   border-radius: 10px;
   font-size: 22px;
-  background-color: lightgrey;
+  background-color: #d3bfa1;
   border: 1px solid white;
   &:hover {
     transition: 200ms ease-in-out;
     font-size: 25px;
-    box-shadow: 0px 0px 3px 1px grey;
+    box-shadow: 0px 0px 3px 1px #5f4024;
     font-weight: 200;
   }
 `;
@@ -104,7 +128,6 @@ const LeftWrapper = styled.div`
   flex-direction: column;
   align-items: left;
   position: fixed;
-  min-width: 30%;
   top: 120px;
   left: 0;
 `;
@@ -119,24 +142,35 @@ const StyledFiHome = styled(FiHome)`
   margin-right: 20px;
   position: relative;
   top: 7px;
+  color: #5f4024;
 `;
 
-const StyledFiBookmark = styled(FiBookmark)`
-  margin-right: 20px;
-  position: relative;
-  top: 7px;
-`;
+// const StyledFiBookmark = styled(FiBookmark)`
+//   margin-right: 20px;
+//   position: relative;
+//   top: 7px;
+//   color: #5f4024;
+// `;
 
 const StyledFiMessageSquare = styled(FiMessageSquare)`
   margin-right: 20px;
   position: relative;
   top: 7px;
+  color: #5f4024;
 `;
 
 const StyledFiUser = styled(FiUser)`
   margin-right: 20px;
   position: relative;
   top: 7px;
+  color: #5f4024;
+`;
+
+const StyledFiSetting = styled(FiSettings)`
+  margin-right: 20px;
+  position: relative;
+  top: 7px;
+  color: #5f4024;
 `;
 
 const StyledNavlink = styled(NavLink)`
@@ -146,6 +180,7 @@ const StyledNavlink = styled(NavLink)`
   color: black;
   padding: 10px;
   border-radius: 10px;
+  color: #5f4024;
   cursor: pointer;
   &.active {
     font-weight: bold;
@@ -163,6 +198,7 @@ const LogoutBox = styled.div`
   position: relative;
   left: 4px;
   cursor: pointer;
+  color: #5f4024;
 `;
 
 const Logout = styled.p`

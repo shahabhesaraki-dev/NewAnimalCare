@@ -62,9 +62,6 @@ const signIn = async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
-  const body = req.body;
-  console.log(body);
-
   const client = new MongoClient(MONGO_URI, options);
   try {
     await client.connect();
@@ -126,9 +123,13 @@ const addNewPost = async (req, res) => {
     await client.connect();
     const petName = req.body.petName;
     const petAge = req.body.petAge;
+    const yearOrMonth = req.body.yearOrMonth;
     const petType = req.body.petType;
     const startDate = req.body.startDate;
     const endDate = req.body.endDate;
+    const startTime = req.body.startTime;
+    const endTime = req.body.endTime;
+    const service = req.body.service;
     const description = req.body.description;
     const userId = req.body.userId;
     const firstName = req.body.firstName;
@@ -140,9 +141,13 @@ const addNewPost = async (req, res) => {
       description: description,
       petName: petName,
       petAge: petAge,
+      yearOrMonth: yearOrMonth,
       petType: petType,
       startDate: startDate,
       endDate: endDate,
+      startTime: startTime,
+      endTime: endTime,
+      service: service,
       image: result.key,
       userId: userId,
       user: {
@@ -345,6 +350,8 @@ const updateBackgroundImage = async (req, res) => {
 
 const getAllPostButYours = async (req, res) => {
   const { userId } = req.params;
+  const { service } = req.params;
+
   const client = new MongoClient(MONGO_URI, options);
 
   try {
@@ -354,9 +361,27 @@ const getAllPostButYours = async (req, res) => {
     const allPosts = await db.collection("allPosts").find().toArray();
     const allPostsButYours = allPosts.filter((post) => {
       if (post.user.id !== userId) {
-        return post;
+        if (service === "Day-Care") {
+          return post.service === "Day-Care";
+        } else if (service === "House-Visit") {
+          return post.service === "House-Visit";
+        } else if (service === "Pet-Walk") {
+          return post.service === "Pet-Walk";
+        } else if (service === "All") {
+          return post;
+        }
       }
     });
+
+    // const specificPosts = allPostsButYours.filter((post) => {
+    //   if (service === "Day-Care") {
+    //     return post.service === "Day-Care";
+    //   } else if (service === "House-Visit") {
+    //     return post.service === "House-Visit";
+    //   } else if (service === "All") {
+    //     return post;
+    //   }
+    // });
 
     res.status(200).json({
       status: 200,
