@@ -18,10 +18,7 @@ const Service = () => {
   const history = useHistory();
 
   const { setGetService } = useContext(DetailsContext);
-
   const [answered, setAnswered] = useState(false);
-
-  console.log(answered);
 
   return (
     <MainDiv>
@@ -54,6 +51,7 @@ const Service = () => {
 
             <Services
               onClick={() => {
+                localStorage.setItem("service", JSON.stringify("All"));
                 setGetService("All");
                 setAnswered(false);
                 history.push("/home");
@@ -71,6 +69,7 @@ const Service = () => {
 
             <Services
               onClick={() => {
+                localStorage.setItem("service", JSON.stringify("Day-Care"));
                 setGetService("Day-Care");
                 setAnswered(false);
                 history.push("/home");
@@ -83,6 +82,7 @@ const Service = () => {
             </Services>
             <Services
               onClick={() => {
+                localStorage.setItem("service", JSON.stringify("Pet-Walk"));
                 setGetService("Pet-Walk");
                 setAnswered(false);
                 history.push("/home");
@@ -95,6 +95,7 @@ const Service = () => {
             </Services>
             <Services
               onClick={() => {
+                localStorage.setItem("service", JSON.stringify("House-Visit"));
                 setGetService("House-Visit");
                 setAnswered(false);
                 history.push("/home");
@@ -107,6 +108,7 @@ const Service = () => {
             </Services>
             <Services
               onClick={() => {
+                localStorage.setItem("service", JSON.stringify("All"));
                 setGetService("All");
                 setAnswered(false);
                 history.push("/home");
@@ -133,6 +135,7 @@ const Service = () => {
             <Paragraph>What are you looking for?</Paragraph>
             <Services
               onClick={() => {
+                localStorage.setItem("service", JSON.stringify("All"));
                 setGetService("All");
                 setAnswered(false);
                 history.push("/newPost");
@@ -145,6 +148,7 @@ const Service = () => {
             </Services>
             <Services
               onClick={() => {
+                localStorage.setItem("service", JSON.stringify("All"));
                 setGetService("All");
                 setAnswered(false);
                 history.push("/home");

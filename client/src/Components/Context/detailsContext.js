@@ -5,15 +5,11 @@ export const DetailsContext = createContext();
 
 export const DetailsContextProvider = ({ children }) => {
   const userId = JSON.parse(localStorage.getItem("userId"));
-  // const service = JSON.parse(localStorage.getItem("service"));
+  const service = JSON.parse(localStorage.getItem("service"));
 
   const [userData, setUserData] = useState([]);
-
   const [allPostsButYours, setAllPostsButYours] = useState([]);
-
-  const [getService, setGetService] = useState();
-
-  console.log(getService);
+  const [getService, setGetService] = useState(service);
 
   useEffect(() => {
     if (userId) {

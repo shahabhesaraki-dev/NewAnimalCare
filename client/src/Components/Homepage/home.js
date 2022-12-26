@@ -148,6 +148,7 @@ const PostSection = styled.div`
   border-radius: 15px;
   margin-top: 20px;
   background-color: #d3bfa1;
+  border: 2px solid black;
 `;
 
 const NoThumbnail = styled.div`
@@ -161,6 +162,7 @@ const ThumbImage = styled.img`
   width: 70px;
   height: 70px;
   border-radius: 50%;
+  border: 1px solid black;
 `;
 
 const FullName = styled.h2`
@@ -177,7 +179,7 @@ const UserName = styled.h3`
   position: relative;
   left: 80px;
   top: -48px;
-  color: grey;
+  color: #3e3031;
 `;
 
 const FirstLabel = styled.h4`
@@ -216,6 +218,7 @@ const Start = styled.p`
   text-align: center;
   width: 35%;
   color: white;
+  border: 2px solid white;
 `;
 
 const Title = styled.h4`
@@ -231,6 +234,7 @@ const Title = styled.h4`
   padding: 10px;
   text-align: center;
   width: 35%;
+  border: 2px solid white;
 `;
 
 const Detail = styled.p`
@@ -248,6 +252,7 @@ const Detail = styled.p`
   text-align: center;
   width: 35%;
   color: white;
+  border: 2px solid white;
 `;
 
 const AboutTitle = styled.h4`
@@ -272,6 +277,7 @@ const AboutDetail = styled.p`
   padding-left: 30px;
   width: 65%;
   color: white;
+  border: 2px solid white;
 `;
 
 const PostImage = styled.img`
@@ -279,6 +285,7 @@ const PostImage = styled.img`
   height: 300px;
   margin-left: 30px;
   border-radius: 10px;
+  border: 2px solid white;
 `;
 
 const FlexDiv = styled.div`
@@ -304,7 +311,6 @@ const Button = styled.button`
   font-family: "Abel";
   width: 180px;
   height: 50px;
-  border: none;
   border-radius: 10px;
   font-size: 22px;
   background-color: white;
@@ -312,9 +318,10 @@ const Button = styled.button`
   color: #5f4024;
   margin-left: 30px;
   margin-top: 20px;
+  cursor: pointer;
   &:hover {
     transition: 200ms ease-in-out;
-    font-size: 25px;
+    font-size: 24px;
     box-shadow: 0px 0px 3px 1px white;
     font-weight: 200;
   }

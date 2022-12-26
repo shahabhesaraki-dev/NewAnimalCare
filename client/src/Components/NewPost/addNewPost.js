@@ -28,8 +28,6 @@ const AddNewPost = () => {
   const [endTime, setEndTime] = useState();
   const [service, setService] = useState();
 
-  console.log(startTime);
-
   const postYourPet = () => {
     const formData = new FormData();
     formData.append("petName", petName);

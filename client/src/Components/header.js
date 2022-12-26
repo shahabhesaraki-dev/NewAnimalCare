@@ -18,7 +18,8 @@ const Header = () => {
 
   const logOutHandler = () => {
     window.localStorage.removeItem("userId");
-    history.push("/");
+    window.localStorage.removeItem("service");
+    // history.push("/");
     window.location.reload();
   };
 
@@ -142,7 +143,6 @@ const StyledFiHome = styled(FiHome)`
   margin-right: 20px;
   position: relative;
   top: 7px;
-  color: #5f4024;
 `;
 
 // const StyledFiBookmark = styled(FiBookmark)`
@@ -156,21 +156,18 @@ const StyledFiMessageSquare = styled(FiMessageSquare)`
   margin-right: 20px;
   position: relative;
   top: 7px;
-  color: #5f4024;
 `;
 
 const StyledFiUser = styled(FiUser)`
   margin-right: 20px;
   position: relative;
   top: 7px;
-  color: #5f4024;
 `;
 
 const StyledFiSetting = styled(FiSettings)`
   margin-right: 20px;
   position: relative;
   top: 7px;
-  color: #5f4024;
 `;
 
 const StyledNavlink = styled(NavLink)`
@@ -180,13 +177,13 @@ const StyledNavlink = styled(NavLink)`
   color: black;
   padding: 10px;
   border-radius: 10px;
-  color: #5f4024;
   cursor: pointer;
   &.active {
     font-weight: bold;
+    font-size: 23px;
   }
   &:hover {
-    background-color: #f0f0f0;
+    background-color: white;
   }
 `;
 
@@ -198,7 +195,6 @@ const LogoutBox = styled.div`
   position: relative;
   left: 4px;
   cursor: pointer;
-  color: #5f4024;
 `;
 
 const Logout = styled.p`
