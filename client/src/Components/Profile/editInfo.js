@@ -4,20 +4,22 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import Button from "@material-ui/core/Button";
 import { useState } from "react";
-import { MdAddCircle } from "react-icons/md";
 
-const UpdateBackgroundImage = () => {
+const EditInfoButton = () => {
   const userId = JSON.parse(localStorage.getItem("userId"));
   const [open, setOpen] = useState(false);
 
-  const [file, setFile] = useState();
+  const [info, setInfo] = useState();
 
-  const updateBackgroundImage = () => {
+  console.log("ID", userId);
+  console.log("INFO", info);
+
+  const updateInfo = () => {
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("info", info);
     formData.append("userId", userId);
 
-    fetch("/api/updateBackgroundImage", {
+    fetch("/api/updateUserInfo", {
       method: "PATCH",
       body: formData,
     })
@@ -42,27 +44,26 @@ const UpdateBackgroundImage = () => {
 
   return (
     <>
-      <StyledMdAddCircleBack size={30} onClick={handleClickToOpen} />
+      <EditButton onClick={handleClickToOpen}>Edit</EditButton>
       <Dialog open={open} onClose={handleToClose}>
-        <Title style={{ marginBottom: "50px" }}>Update image</Title>
-        <DialogContent>
-          <label htmlFor="file-input">
-            <FileInput
-              id="file-input"
-              type="file"
-              accept="image/*"
+        <Title style={{ marginBottom: "50px" }}>Edit info</Title>
+        <StyledDialogContent>
+          <label htmlFor="info">
+            <TextArea
+              id="info"
+              value={info || ""}
               onChange={(e) => {
-                setFile(e.target.files[0]);
+                setInfo(e.target.value);
               }}
             />
           </label>
           <br />
-          {file ? (
-            <DialogButton onClick={updateBackgroundImage}>Update</DialogButton>
+          {info ? (
+            <DialogButton onClick={updateInfo}>Update</DialogButton>
           ) : (
             <DialogButton disabled>Update</DialogButton>
           )}
-        </DialogContent>
+        </StyledDialogContent>
         <DialogActions>
           <CloseButton onClick={handleToClose}>Close</CloseButton>
         </DialogActions>
@@ -71,40 +72,63 @@ const UpdateBackgroundImage = () => {
   );
 };
 
+const StyledDialogContent = styled(DialogContent)`
+  width: 500px;
+`;
+
 const Title = styled.h1`
   font-family: "Acme";
-  font-size: 55px;
+  font-size: 45px;
   text-align: center;
   margin-top: 50px;
   color: #5f4024;
   padding: 0px 20px;
 `;
 
-const FileInput = styled.input``;
+const TextArea = styled.textarea`
+  width: 95%;
+  height: 150px;
+  border-radius: 10px;
+  padding: 10px;
+  font-family: Abel;
+  font-size: 17px;
+  outline-color: #5f4024;
+`;
 
-const StyledMdAddCircleBack = styled(MdAddCircle)`
+const EditButton = styled.button`
   position: absolute;
-  bottom: -20px;
-  right: 95px;
+  right: 0;
+  bottom: 0;
+  width: 70px;
+  height: 30px;
+  padding: 5px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  text-align: center;
+  border: none;
+  border-radius: 10px;
+  font-family: Acme;
+  font-size: 18px;
   cursor: pointer;
 `;
 
 const DialogButton = styled.button`
-  height: 50px;
-  width: 250px;
-  font-size: 18px;
-  margin-top: 25px;
-  margin-left: 5px;
-  outline: none;
-  border-radius: 30px;
   font-family: "Abel";
-  font-size: 21px;
-  background-color: #825e3a;
+  width: 180px;
+  height: 50px;
   border: none;
+  border-radius: 10px;
+  font-size: 22px;
+  background-color: #825e3a;
+  border: 1px solid white;
+  margin-top: 10px;
   color: white;
+  cursor: pointer;
   &:hover:enabled {
-    background-color: #240d01;
     transition: 200ms ease-in-out;
+    font-size: 25px;
+    box-shadow: 0px 0px 3px 1px #5f4024;
+    font-weight: 200;
   }
   &:disabled {
     cursor: not-allowed;
@@ -119,12 +143,4 @@ const CloseButton = styled(Button)`
   height: 30px;
 `;
 
-// const Error = styled.h2`
-//   font-family: "Acme";
-//   font-size: 17px;
-//   color: darkred;
-//   margin-left: 5px;
-//   margin-bottom: 5px;
-// `;
-
-export default UpdateBackgroundImage;
+export default EditInfoButton;

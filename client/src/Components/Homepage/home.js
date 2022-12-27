@@ -4,8 +4,10 @@ import { useContext } from "react";
 import { DetailsContext } from "../Context/detailsContext";
 import DOG from "../../Assets/backDog.png";
 // import CAT from "../../Assets/backCat.png";
+import { useHistory } from "react-router-dom";
 
 const Home = () => {
+  const history = useHistory();
   const { allPostsButYours } = useContext(DetailsContext);
 
   return (
@@ -25,13 +27,39 @@ const Home = () => {
                 >
                   <div>
                     {post.user.profileImage ? (
-                      <ThumbImage src={`/image/${post.user.profileImage}`} />
+                      <ThumbImage
+                        onClick={() => {
+                          history.push("/user-profile", {
+                            id: post.user.id,
+                          });
+                        }}
+                        src={`/image/${post.user.profileImage}`}
+                      />
                     ) : (
-                      <NoThumbnail />
+                      <NoThumbnail
+                        onClick={() => {
+                          history.push("/user-profile", {
+                            id: post.user.id,
+                          });
+                        }}
+                      />
                     )}
 
-                    <FullName>
-                      {post.user.firstName} {post.user.lastName}
+                    <FullName
+                      onClick={() => {
+                        history.push("/user-profile", {
+                          id: post.user.id,
+                        });
+                      }}
+                    >
+                      {post.user.firstName.replace(
+                        /^./,
+                        post.user.firstName[0].toUpperCase()
+                      )}{" "}
+                      {post.user.lastName.replace(
+                        /^./,
+                        post.user.lastName[0].toUpperCase()
+                      )}
                     </FullName>
                     <UserName>{post.user.username}</UserName>
                   </div>
@@ -61,16 +89,6 @@ const Home = () => {
                         <Detail>{post.service}</Detail>
                       </FlexDiv>
 
-                      {/* <FlexDiv>
-                        <Title>Start date:</Title>
-                        <Detail></Detail>
-                      </FlexDiv>
-
-                      <FlexDiv>
-                        <Title>End date:</Title>
-                        <Detail>{post.endDate}</Detail>
-                      </FlexDiv> */}
-
                       <FlexDiv>
                         <FirstLabel>Start date:</FirstLabel>
                         <SecondLabel>End date:</SecondLabel>
@@ -91,7 +109,7 @@ const Home = () => {
                         <Detail>{post.endTime}</Detail>
                       </FlexDiv>
 
-                      <AboutDetail>
+                      <AboutDiv>
                         <AboutTitle>
                           About{" "}
                           {post.petName
@@ -102,8 +120,8 @@ const Home = () => {
                             : null}
                           :
                         </AboutTitle>
-                        {post.description}
-                      </AboutDetail>
+                        <AboutDetail>{post.description}</AboutDetail>
+                      </AboutDiv>
                     </DetailsDiv>
                     <ImageDiv>
                       <DivButton>
@@ -156,6 +174,7 @@ const NoThumbnail = styled.div`
   height: 70px;
   border-radius: 50%;
   background-color: coral;
+  cursor: pointer;
 `;
 
 const ThumbImage = styled.img`
@@ -163,6 +182,7 @@ const ThumbImage = styled.img`
   height: 70px;
   border-radius: 50%;
   border: 1px solid black;
+  cursor: pointer;
 `;
 
 const FullName = styled.h2`
@@ -171,6 +191,7 @@ const FullName = styled.h2`
   position: relative;
   left: 80px;
   top: -50px;
+  cursor: pointer;
 `;
 
 const UserName = styled.h3`
@@ -255,6 +276,20 @@ const Detail = styled.p`
   border: 2px solid white;
 `;
 
+const AboutDiv = styled.div`
+  position: relative;
+  left: 60px;
+  top: -20px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 60px;
+  background-color: #a18763;
+  padding: 20px;
+  padding-left: 30px;
+  width: 65%;
+  border: 2px solid white;
+`;
+
 const AboutTitle = styled.h4`
   font-family: Abel;
   font-size: 21px;
@@ -266,18 +301,7 @@ const AboutTitle = styled.h4`
 const AboutDetail = styled.p`
   font-family: "Abel";
   font-size: 21px;
-  position: relative;
-  left: 60px;
-  top: -20px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 60px;
-  background-color: #a18763;
-  padding: 20px;
-  padding-left: 30px;
-  width: 65%;
   color: white;
-  border: 2px solid white;
 `;
 
 const PostImage = styled.img`

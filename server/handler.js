@@ -53,6 +53,7 @@ const addUser = async (req, res) => {
         message: "This email address already exixsts!",
       });
     }
+    client.close();
   } catch (err) {
     console.log("Error: ", err);
   }
@@ -87,6 +88,7 @@ const signIn = async (req, res) => {
         message: "We cannot find an account with that e-mail address!",
       });
     }
+    client.close();
   } catch (err) {
     console.log("Error: ", err);
   }
@@ -107,6 +109,7 @@ const getUser = async (req, res) => {
         data: result,
       });
     }
+    client.close();
   } catch (err) {
     console.log("Error :", err);
   }
@@ -178,6 +181,7 @@ const addNewPost = async (req, res) => {
         });
       }
     }
+    client.close();
   } catch (err) {
     console.log("Error: ", err);
   }
@@ -225,6 +229,7 @@ const addProfileImage = async (req, res) => {
         message: "Profile image successfully added!",
       });
     }
+    client.close();
   } catch (err) {
     console.log("Error: ", err);
   }
@@ -262,6 +267,7 @@ const addBackgroundImage = async (req, res) => {
         message: "Background image successfully added!",
       });
     }
+    client.close();
   } catch (err) {
     console.log("Error: ", err);
   }
@@ -292,13 +298,6 @@ const updateProfileImage = async (req, res) => {
           { _id: ObjectId(userId) },
           { $set: { profileImage: result.key } }
         );
-
-      // const allUserPosts = await db
-      //   .collection("allPosts")
-      //   .find({ userId: ObjectId(userId) });
-      //   allUserPosts.forEach((post)=>{
-      //     await db.collection("allPosts").updateOne()
-      //   })
       res.status(200).json({
         status: 200,
         userId: userId,
@@ -306,6 +305,7 @@ const updateProfileImage = async (req, res) => {
         message: "Background image successfully updated!",
       });
     }
+    client.close();
   } catch (err) {
     console.log("Error: ", err);
   }
@@ -343,6 +343,7 @@ const updateBackgroundImage = async (req, res) => {
         message: "Background image successfully updated!",
       });
     }
+    client.close();
   } catch (err) {
     console.log("Error: ", err);
   }
@@ -373,21 +374,45 @@ const getAllPostButYours = async (req, res) => {
       }
     });
 
-    // const specificPosts = allPostsButYours.filter((post) => {
-    //   if (service === "Day-Care") {
-    //     return post.service === "Day-Care";
-    //   } else if (service === "House-Visit") {
-    //     return post.service === "House-Visit";
-    //   } else if (service === "All") {
-    //     return post;
-    //   }
-    // });
-
     res.status(200).json({
       status: 200,
       data: allPostsButYours,
       message: "All post exept yours received",
     });
+    client.close();
+  } catch (err) {
+    console.log("Error: ", err);
+  }
+};
+
+const updateUserInfo = async (req, res) => {
+  const client = new MongoClient(MONGO_URI, options);
+
+  try {
+    await client.connect();
+
+    const info = req.body.info;
+    const userId = req.body.userId;
+
+    const db = client.db("animalCare");
+
+    const user = await db
+      .collection("users")
+      .findOne({ _id: ObjectId(userId) });
+
+    if (user) {
+      await db
+        .collection("users")
+        .updateOne({ _id: ObjectId(userId) }, { $set: { info: info } });
+
+      res.status(200).json({
+        status: 200,
+        userId: userId,
+        info: info,
+        message: "UserInfo successfully updated!",
+      });
+    }
+    client.close();
   } catch (err) {
     console.log("Error: ", err);
   }
@@ -404,4 +429,5 @@ module.exports = {
   updateProfileImage,
   updateBackgroundImage,
   getAllPostButYours,
+  updateUserInfo,
 };

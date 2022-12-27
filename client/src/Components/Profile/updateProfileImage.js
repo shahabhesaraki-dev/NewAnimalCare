@@ -113,7 +113,7 @@ const DialogButton = styled.button`
 `;
 
 const CloseButton = styled(Button)`
-  background-color: #240d01 !important;
+  background-color: #5f4024 !important;
   color: white !important ;
   margin-top: 20px !important;
   height: 30px;

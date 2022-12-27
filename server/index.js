@@ -15,6 +15,7 @@ const {
   updateProfileImage,
   updateBackgroundImage,
   getAllPostButYours,
+  updateUserInfo,
 } = require("./handler");
 
 const PORT = process.env.PORT || 5000;
@@ -53,6 +54,7 @@ express()
   .post("/api/signIn", signIn)
   .get("/api/getUser/:id", getUser)
   .get("/api/getAllPostButYours/:userId/:service", getAllPostButYours)
+  .patch("/api/updateUserInfo", upload.single("file"), updateUserInfo)
 
   .get("*", (req, res) => {
     res.status(404).json({

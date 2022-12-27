@@ -1,20 +1,34 @@
 import styled from "styled-components";
 import Header from "../header";
-import { useContext, useState } from "react";
-import { DetailsContext } from "../Context/detailsContext";
+import { useState } from "react";
 import AddNewProfileImage from "./addNewImage";
 import AddNewBackgroundImage from "./addNewBackground";
 import UpdateProfileImage from "./updateProfileImage";
 import UpdateBackgroundImage from "./updateBackgroundImg";
 import DOG from "../../Assets/backDog.png";
-import EditInfoButton from "./editInfo";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
-const ProfilePage = () => {
-  const userId = JSON.parse(localStorage.getItem("userId"));
-  const { userData } = useContext(DetailsContext);
+const PublicProfile = () => {
+  const location = useLocation();
+  const userId = location.state.id;
+  const mainUserID = JSON.parse(localStorage.getItem("userId"));
+  const [userData, setUserData] = useState([]);
 
   const [postActive, setPostActive] = useState(true);
   const [infoActive, setInfoActive] = useState(false);
+
+  useEffect(() => {
+    if (userId) {
+      const getUser = async () => {
+        const respond = await fetch(`/api/getUser/${userId}`);
+        const result = await respond.json();
+        setUserData(result.data);
+      };
+      getUser();
+    }
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <MainDiv>
@@ -25,7 +39,7 @@ const ProfilePage = () => {
             {userData.length !== 0 && userData.backgroundImage !== undefined ? (
               <>
                 <BackgroundImage src={`/image/${userData.backgroundImage}`} />
-                {userData && userId && userData._id === userId ? (
+                {userData && mainUserID && userData._id === mainUserID ? (
                   <UpdateBackgroundImage />
                 ) : null}
               </>
@@ -39,7 +53,7 @@ const ProfilePage = () => {
             {userData.length !== 0 && userData.profileImage ? (
               <>
                 <ProfileImage src={`/image/${userData.profileImage}`} />
-                {userData && userId && userData._id === userId ? (
+                {userData && mainUserID && userData._id === mainUserID ? (
                   <UpdateProfileImage />
                 ) : null}
               </>
@@ -187,6 +201,9 @@ const ProfilePage = () => {
                     <DivButton>
                       <PostImage src={`/image/${post.image}`} />
                     </DivButton>
+                    <DivButton>
+                      <MessageButton>Message me</MessageButton>
+                    </DivButton>
                   </ImageDiv>
                 </FlexDiv>
               </PostSection>
@@ -197,20 +214,17 @@ const ProfilePage = () => {
           userData.posts &&
           userData.posts.length === 0 &&
           postActive === true ? (
-          <OtherPostSection>
+          <ZeroPostSection>
             <NoPostMessage>Sorry! There are no posts to show.</NoPostMessage>
-          </OtherPostSection>
+          </ZeroPostSection>
         ) : infoActive === true ? (
           <OtherPostSection>
             <AboutTitle>About:</AboutTitle>
             {userData && userData.info ? (
               <InfoDescription>{userData.info}</InfoDescription>
             ) : (
-              <InfoDescription>Tell people abour yourself...</InfoDescription>
+              <InfoDescription>There are no details!</InfoDescription>
             )}
-            {userData && userId && userData._id === userId ? (
-              <EditInfoButton />
-            ) : null}
           </OtherPostSection>
         ) : null}
       </Wrapper>
@@ -484,6 +498,26 @@ const DivButton = styled.div`
   justify-content: center;
 `;
 
+const MessageButton = styled.button`
+  font-family: "Abel";
+  width: 180px;
+  height: 50px;
+  border-radius: 10px;
+  font-size: 22px;
+  background-color: white;
+  border: 1px solid #5f4024;
+  color: #5f4024;
+  margin-left: 30px;
+  margin-top: 20px;
+  cursor: pointer;
+  &:hover {
+    transition: 200ms ease-in-out;
+    font-size: 24px;
+    box-shadow: 0px 0px 3px 1px white;
+    font-weight: 200;
+  }
+`;
+
 const ButtonFlexDiv = styled.div`
   display: flex;
   justify-content: center;
@@ -506,6 +540,28 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
+const ZeroPostSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 69%;
+  min-width: 40%;
+  margin-left: 300px;
+  position: relative;
+  top: 20px;
+  padding: 30px;
+  border-radius: 15px;
+  margin-top: 20px;
+  background-color: #d3bfa1;
+  border: 2px solid black;
+`;
+
+const NoPostMessage = styled.h2`
+  font-family: "Abel";
+  font-size: 21px;
+  position: relative;
+  text-align: center;
+`;
+
 const OtherPostSection = styled.div`
   display: flex;
   flex-direction: column;
@@ -522,13 +578,6 @@ const OtherPostSection = styled.div`
   margin-bottom: 50px;
 `;
 
-const NoPostMessage = styled.h2`
-  font-family: "Abel";
-  font-size: 21px;
-  position: relative;
-  text-align: center;
-`;
-
 const InfoDescription = styled.p`
   font-family: "Abel";
   font-size: 20px;
@@ -536,4 +585,4 @@ const InfoDescription = styled.p`
   margin-bottom: 20px;
 `;
 
-export default ProfilePage;
+export default PublicProfile;

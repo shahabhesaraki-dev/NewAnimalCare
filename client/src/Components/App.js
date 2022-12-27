@@ -8,6 +8,7 @@ import Messages from "./NavPages/messages";
 import ProfilePage from "./Profile/profilePage";
 import AddNewPost from "./NewPost/addNewPost";
 import Service from "./Service/service";
+import PublicProfile from "./Profile/publicProfile";
 
 const App = () => {
   const isLogIn = localStorage.getItem("userId");
@@ -35,6 +36,9 @@ const App = () => {
         </Route>
         <Route path="/services">
           {isLogIn ? <Service /> : <Redirect exact to="/" />}
+        </Route>
+        <Route path="/user-profile">
+          {isLogIn ? <PublicProfile /> : <Redirect exact to="/" />}
         </Route>
       </Switch>
     </BrowserRouter>
