@@ -3,6 +3,8 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import Button from "@material-ui/core/Button";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import { useState } from "react";
 
 const EditInfoButton = () => {
@@ -10,9 +12,6 @@ const EditInfoButton = () => {
   const [open, setOpen] = useState(false);
 
   const [info, setInfo] = useState();
-
-  console.log("ID", userId);
-  console.log("INFO", info);
 
   const updateInfo = () => {
     const formData = new FormData();
@@ -48,13 +47,11 @@ const EditInfoButton = () => {
       <Dialog open={open} onClose={handleToClose}>
         <Title style={{ marginBottom: "50px" }}>Edit info</Title>
         <StyledDialogContent>
-          <label htmlFor="info">
-            <TextArea
-              id="info"
+          <label>
+            <StyledReactQuill
+              theme="snow"
               value={info || ""}
-              onChange={(e) => {
-                setInfo(e.target.value);
-              }}
+              onChange={setInfo}
             />
           </label>
           <br />
@@ -85,8 +82,18 @@ const Title = styled.h1`
   padding: 0px 20px;
 `;
 
-const TextArea = styled.textarea`
-  width: 95%;
+// const TextArea = styled.textarea`
+//   width: 95%;
+//   height: 150px;
+//   border-radius: 10px;
+//   padding: 10px;
+//   font-family: Abel;
+//   font-size: 17px;
+//   outline-color: #5f4024;
+// `;
+
+const StyledReactQuill = styled(ReactQuill)`
+  width: 100%;
   height: 150px;
   border-radius: 10px;
   padding: 10px;
@@ -114,14 +121,15 @@ const EditButton = styled.button`
 
 const DialogButton = styled.button`
   font-family: "Abel";
-  width: 180px;
-  height: 50px;
+  width: 160px;
+  height: 45px;
   border: none;
   border-radius: 10px;
   font-size: 22px;
   background-color: #825e3a;
   border: 1px solid white;
   margin-top: 10px;
+  margin-left: 10px;
   color: white;
   cursor: pointer;
   &:hover:enabled {

@@ -64,13 +64,13 @@ const PublicProfile = () => {
             )}
           </ProfileFrame>
           <Name>
-            {userData
+            {userData.length !== 0
               ? userData.firstName.replace(
                   /^./,
                   userData.firstName[0].toUpperCase()
                 )
               : null}{" "}
-            {userData
+            {userData.length !== 0
               ? userData.lastName.replace(
                   /^./,
                   userData.lastName[0].toUpperCase()
@@ -221,7 +221,9 @@ const PublicProfile = () => {
           <OtherPostSection>
             <AboutTitle>About:</AboutTitle>
             {userData && userData.info ? (
-              <InfoDescription>{userData.info}</InfoDescription>
+              <InfoDescription
+                dangerouslySetInnerHTML={{ __html: userData.info }}
+              />
             ) : (
               <InfoDescription>There are no details!</InfoDescription>
             )}
@@ -320,8 +322,8 @@ const Name = styled.h1`
   font-family: Acme;
   font-size: 28px;
   position: relative;
-  top: -160px;
-  left: 220px;
+  top: -80px;
+  margin-left: 25px;
   color: black;
 `;
 

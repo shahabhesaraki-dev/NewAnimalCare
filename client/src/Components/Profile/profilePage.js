@@ -50,13 +50,13 @@ const ProfilePage = () => {
             )}
           </ProfileFrame>
           <Name>
-            {userData
+            {userData.length !== 0
               ? userData.firstName.replace(
                   /^./,
                   userData.firstName[0].toUpperCase()
                 )
               : null}{" "}
-            {userData
+            {userData.length !== 0
               ? userData.lastName.replace(
                   /^./,
                   userData.lastName[0].toUpperCase()
@@ -202,11 +202,13 @@ const ProfilePage = () => {
           </OtherPostSection>
         ) : infoActive === true ? (
           <OtherPostSection>
-            <AboutTitle>About:</AboutTitle>
+            <InfoTitle>About:</InfoTitle>
             {userData && userData.info ? (
-              <InfoDescription>{userData.info}</InfoDescription>
+              <InfoDescription
+                dangerouslySetInnerHTML={{ __html: userData.info }}
+              />
             ) : (
-              <InfoDescription>Tell people abour yourself...</InfoDescription>
+              <InfoDescription>Tell people about yourself...</InfoDescription>
             )}
             {userData && userId && userData._id === userId ? (
               <EditInfoButton />
@@ -306,8 +308,8 @@ const Name = styled.h1`
   font-family: Acme;
   font-size: 28px;
   position: relative;
-  top: -160px;
-  left: 220px;
+  top: -80px;
+  margin-left: 25px;
   color: black;
 `;
 
@@ -529,9 +531,17 @@ const NoPostMessage = styled.h2`
   text-align: center;
 `;
 
+const InfoTitle = styled.h4`
+  font-family: Acme;
+  font-size: 22px;
+  text-align: left;
+  color: black;
+  margin-bottom: 10px;
+`;
+
 const InfoDescription = styled.p`
   font-family: "Abel";
-  font-size: 20px;
+  font-size: 21px;
   color: black;
   margin-bottom: 20px;
 `;
