@@ -538,7 +538,8 @@ const InfoDescription = styled.p`
   font-family: "Abel";
   font-size: 21px;
   color: black;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  line-height: 30px;
 `;
 
 export default ProfilePage;

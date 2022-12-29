@@ -1,30 +1,38 @@
 import styled from "styled-components";
 import Header from "../header";
+import DOG from "../../Assets/backDog.png";
 const Messages = () => {
   return (
-    <>
+    <MainDiv>
       <Header />
       <Section>
         <Content></Content>
       </Section>
-    </>
+    </MainDiv>
   );
 };
 
+const MainDiv = styled.div`
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background-image: url(${DOG});
+`;
+
 const Section = styled.div`
   display: flex;
-  max-width: 100%;
+  flex-direction: column;
+  width: 78%;
   justify-content: center;
-  padding: 50px 10px;
+  padding: 10px 20px;
 `;
 
 const Content = styled.div`
   display: flex;
-  min-width: 60%;
-  border: 1px solid black;
+  width: 90%;
+  border: 2px solid black;
   border-radius: 10px;
-  height: 2000px;
-  margin-left: 250px;
+  min-height: 90vh;
 `;
 
 export default Messages;

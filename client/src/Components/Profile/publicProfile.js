@@ -219,7 +219,7 @@ const PublicProfile = () => {
           </ZeroPostSection>
         ) : infoActive === true ? (
           <OtherPostSection>
-            <AboutTitle>About:</AboutTitle>
+            <InfoTitle>About:</InfoTitle>
             {userData && userData.info ? (
               <InfoDescription
                 dangerouslySetInnerHTML={{ __html: userData.info }}
@@ -574,11 +574,20 @@ const OtherPostSection = styled.div`
   margin-bottom: 50px;
 `;
 
+const InfoTitle = styled.h4`
+  font-family: Acme;
+  font-size: 22px;
+  text-align: left;
+  color: black;
+  margin-bottom: 10px;
+`;
+
 const InfoDescription = styled.p`
   font-family: "Abel";
   font-size: 20px;
   color: black;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  line-height: 30px;
 `;
 
 export default PublicProfile;
