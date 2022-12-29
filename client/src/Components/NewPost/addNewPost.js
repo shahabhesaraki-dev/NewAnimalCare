@@ -65,193 +65,185 @@ const AddNewPost = () => {
   return (
     <Section>
       <Header />
-      <ContentDiv>
-        <Content>
+      <Content>
+        <InputBox>
           <Title>ADD YOUR PET</Title>
+          <Label>Name:</Label>
+          <Input
+            type="text"
+            placeholder="Name"
+            value={petName || ""}
+            onChange={(e) => {
+              setPetName(e.target.value);
+            }}
+          />
 
-          <InputBox>
-            <Label>Name:</Label>
-            <Input
-              type="text"
-              placeholder="Name"
-              value={petName || ""}
-              onChange={(e) => {
-                setPetName(e.target.value);
-              }}
-            />
-
-            <FlexInDiv>
-              <ColumnDiv>
-                <Label>Age:</Label>
-                <AgeInput
-                  type="number"
-                  placeholder="Age"
-                  min="0"
-                  max="18"
-                  value={petAge || ""}
-                  onChange={(e) => {
-                    setPetAge(e.target.value);
-                  }}
-                />
-              </ColumnDiv>
-              <ColumnDiv>
-                <Label>Year or Month:</Label>
-                <Select
-                  value={specificAge || ""}
-                  onChange={(e) => {
-                    setSpecificAge(e.target.value);
-                  }}
-                >
-                  <Option value="0">---</Option>
-                  <Option value={petAge > 1 ? "Years" : "Year"}>Year(s)</Option>
-                  <Option value={petAge > 1 ? "Months" : "Month"}>
-                    Month(s)
-                  </Option>
-                </Select>
-              </ColumnDiv>
-            </FlexInDiv>
-
-            <Label>Pet type:</Label>
-            <TypeSelect
-              value={petType || ""}
-              onChange={(e) => {
-                setPetType(e.target.value);
-              }}
-            >
-              <Option value="0">---</Option>
-              <Option value="Cat">Cat</Option>
-              <Option value="Dog">Dog</Option>
-            </TypeSelect>
-
-            <>
-              <Label>Image:</Label>
-              <FlexInDiv>
-                <ImageButton onClick={handleClick} style={{ width: "20%" }}>
-                  <BsCardImage size={30} />
-                </ImageButton>
-                <>
-                  <Success>{file ? <BsCheckLg size={20} /> : null}</Success>
-                  <ImageName>{file ? `${file.name}` : null}</ImageName>
-                </>
-              </FlexInDiv>
-
-              <input
-                hidden
-                ref={hiddenFileInput}
-                type="file"
-                accept="image/*"
+          <FlexInDiv>
+            <ColumnDiv>
+              <Label>Age:</Label>
+              <AgeInput
+                type="number"
+                placeholder="Age"
+                min="0"
+                max="18"
+                value={petAge || ""}
                 onChange={(e) => {
-                  setFile(e.target.files[0]);
+                  setPetAge(e.target.value);
                 }}
               />
-            </>
+            </ColumnDiv>
+            <ColumnDiv>
+              <Label>Year or Month:</Label>
+              <Select
+                value={specificAge || ""}
+                onChange={(e) => {
+                  setSpecificAge(e.target.value);
+                }}
+              >
+                <Option value="0">---</Option>
+                <Option value={petAge > 1 ? "Years" : "Year"}>Year(s)</Option>
+                <Option value={petAge > 1 ? "Months" : "Month"}>
+                  Month(s)
+                </Option>
+              </Select>
+            </ColumnDiv>
+          </FlexInDiv>
 
+          <Label>Pet type:</Label>
+          <TypeSelect
+            value={petType || ""}
+            onChange={(e) => {
+              setPetType(e.target.value);
+            }}
+          >
+            <Option value="0">---</Option>
+            <Option value="Cat">Cat</Option>
+            <Option value="Dog">Dog</Option>
+          </TypeSelect>
+
+          <>
+            <Label>Image:</Label>
             <FlexInDiv>
-              <ColumnDiv>
-                <Label>Start date:</Label>
-                <DateInput
-                  type="date"
-                  value={startDate || ""}
-                  onChange={(e) => {
-                    setStartDate(e.target.value);
-                  }}
-                />
-              </ColumnDiv>
-
-              <ColumnDiv style={{ marginLeft: "5px" }}>
-                <Label>End date:</Label>
-                <DateInput
-                  style={{ marginLeft: "5px" }}
-                  type="date"
-                  value={endDate || ""}
-                  onChange={(e) => {
-                    setEndDate(e.target.value);
-                  }}
-                />
-              </ColumnDiv>
+              <ImageButton onClick={handleClick} style={{ width: "20%" }}>
+                <BsCardImage size={30} />
+              </ImageButton>
+              <>
+                <Success>{file ? <BsCheckLg size={20} /> : null}</Success>
+                <ImageName>{file ? `${file.name}` : null}</ImageName>
+              </>
             </FlexInDiv>
 
-            <FlexInDiv>
-              <ColumnDiv>
-                <Label>Start time:</Label>
-                <DateInput
-                  type="time"
-                  value={startTime || ""}
-                  onChange={(e) => {
-                    setStartTime(e.target.value);
-                  }}
-                />
-              </ColumnDiv>
-
-              <ColumnDiv style={{ marginLeft: "5px" }}>
-                <Label>End time:</Label>
-                <DateInput
-                  style={{ marginLeft: "5px" }}
-                  type="time"
-                  value={endTime || ""}
-                  onChange={(e) => {
-                    setEndTime(e.target.value);
-                  }}
-                />
-              </ColumnDiv>
-            </FlexInDiv>
-
-            <Label>Service:</Label>
-            <TypeSelect
-              value={service || ""}
+            <input
+              hidden
+              ref={hiddenFileInput}
+              type="file"
+              accept="image/*"
               onChange={(e) => {
-                setService(e.target.value);
-              }}
-            >
-              <Option value="0">---</Option>
-              <Option value="Pet-Walk">
-                Pet walking (in your neighborhood)
-              </Option>
-              <Option value="Day-Care">Day care (at the nurse's home)</Option>
-              <Option value="House-Visit">Visit your pet (at your home)</Option>
-            </TypeSelect>
-
-            <Label>Description:</Label>
-            <TextArea
-              placeholder="Tell us about your pet..."
-              value={description || ""}
-              onChange={(e) => {
-                setDescription(e.target.value);
+                setFile(e.target.files[0]);
               }}
             />
-            <UploadButton onClick={postYourPet}>Upload</UploadButton>
-          </InputBox>
-        </Content>
-      </ContentDiv>
+          </>
+
+          <FlexInDiv>
+            <ColumnDiv>
+              <Label>Start date:</Label>
+              <DateInput
+                type="date"
+                value={startDate || ""}
+                onChange={(e) => {
+                  setStartDate(e.target.value);
+                }}
+              />
+            </ColumnDiv>
+
+            <ColumnDiv style={{ marginLeft: "5px" }}>
+              <Label>End date:</Label>
+              <DateInput
+                style={{ marginLeft: "5px" }}
+                type="date"
+                value={endDate || ""}
+                onChange={(e) => {
+                  setEndDate(e.target.value);
+                }}
+              />
+            </ColumnDiv>
+          </FlexInDiv>
+
+          <FlexInDiv>
+            <ColumnDiv>
+              <Label>Start time:</Label>
+              <DateInput
+                type="time"
+                value={startTime || ""}
+                onChange={(e) => {
+                  setStartTime(e.target.value);
+                }}
+              />
+            </ColumnDiv>
+
+            <ColumnDiv style={{ marginLeft: "5px" }}>
+              <Label>End time:</Label>
+              <DateInput
+                style={{ marginLeft: "5px" }}
+                type="time"
+                value={endTime || ""}
+                onChange={(e) => {
+                  setEndTime(e.target.value);
+                }}
+              />
+            </ColumnDiv>
+          </FlexInDiv>
+
+          <Label>Service:</Label>
+          <TypeSelect
+            value={service || ""}
+            onChange={(e) => {
+              setService(e.target.value);
+            }}
+          >
+            <Option value="0">---</Option>
+            <Option value="Pet-Walk">Pet walking (in your neighborhood)</Option>
+            <Option value="Day-Care">Day care (at the nurse's home)</Option>
+            <Option value="House-Visit">Visit your pet (at your home)</Option>
+          </TypeSelect>
+
+          <Label>Description:</Label>
+          <TextArea
+            placeholder="Tell us about your pet..."
+            value={description || ""}
+            onChange={(e) => {
+              setDescription(e.target.value);
+            }}
+          />
+          <UploadButton onClick={postYourPet}>Upload</UploadButton>
+        </InputBox>
+      </Content>
     </Section>
   );
 };
 
 const Section = styled.div`
   display: flex;
-  justify-content: center;
   width: 100%;
+  min-height: 100vh;
   padding-bottom: 50px;
   background-image: url(${BACK});
 `;
 
-const ContentDiv = styled.div`
-  display: flex;
-  width: 100%;
-`;
-
 const Content = styled.div`
   display: flex;
-  width: 100%;
   flex-direction: column;
-  align-items: center;
+  width: 78%;
+  justify-content: center;
+  padding: 10px 20px;
 `;
 
 const Title = styled.h1`
   font-family: "Acme";
-  font-size: 55px;
+  font-size: 70px;
   text-align: center;
-  margin-top: 50px;
+  margin-bottom: 50px;
+  margin-right: 150px;
   color: #404040;
 `;
 
@@ -268,12 +260,12 @@ const InputBox = styled.div`
   flex-direction: column;
   margin-top: 50px;
   margin-left: 20px;
-  width: 70%;
+  width: 90%;
 `;
 
 const Input = styled.input`
   height: 45px;
-  width: 70%;
+  width: 80%;
   font-size: 18px;
   margin-top: 10px;
   outline-color: #1976d2;
@@ -294,7 +286,7 @@ const Input = styled.input`
 
 const AgeInput = styled.input`
   height: 40px;
-  width: 98%;
+  width: 99%;
   margin-top: 10px;
   outline-color: #5f4024;
   border-radius: 10px;
@@ -308,7 +300,7 @@ const AgeInput = styled.input`
 
 const FlexInDiv = styled.div`
   display: flex;
-  width: 70%;
+  width: 80%;
 `;
 
 const Select = styled.select`
@@ -331,7 +323,7 @@ const Option = styled.option`
 
 const TypeSelect = styled.select`
   height: 44px;
-  width: 72%;
+  width: 81%;
   margin-top: 10px;
   outline-color: #5f4024;
   border-radius: 10px;
@@ -341,7 +333,7 @@ const TypeSelect = styled.select`
 `;
 
 const TextArea = styled.textarea`
-  width: 67%;
+  width: 78%;
   min-height: 150px;
   max-height: 250px;
   border-radius: 10px;
