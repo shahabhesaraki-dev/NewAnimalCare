@@ -142,6 +142,8 @@ const Home = () => {
 };
 
 const MainDiv = styled.div`
+  display: flex;
+  width: 100%;
   min-height: 100vh;
   background-image: url(${DOG});
 `;
@@ -149,19 +151,18 @@ const MainDiv = styled.div`
 const Section = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 100%;
-  justify-content: center;
-  padding: 30px 50px;
+  width: 78%;
+  /* justify-content: center; */
+  padding: 10px 20px;
 `;
 
 const PostSection = styled.div`
   display: flex;
   flex-direction: column;
-  width: 70%;
+  width: 90%;
   min-width: 40%;
-  margin-left: 250px;
   position: relative;
-  top: 20px;
+  top: 25px;
   padding: 10px;
   border-radius: 15px;
   margin-top: 20px;
@@ -278,15 +279,15 @@ const Detail = styled.p`
 
 const AboutDiv = styled.div`
   position: relative;
-  left: 60px;
+  left: 55px;
   top: -20px;
   margin-top: 10px;
   border: none;
   border-radius: 60px;
   background-color: #a18763;
   padding: 20px;
-  padding-left: 30px;
-  width: 65%;
+  padding-left: 25px;
+  width: 70%;
   border: 2px solid white;
 `;
 
@@ -307,23 +308,22 @@ const AboutDetail = styled.p`
 const PostImage = styled.img`
   width: 100%;
   height: 300px;
-  margin-left: 30px;
+  margin-left: 20px;
   border-radius: 10px;
   border: 2px solid white;
 `;
 
 const FlexDiv = styled.div`
   display: flex;
-  width: 90%;
+  width: 95%;
 `;
 
 const DetailsDiv = styled.div`
-  width: 65%;
+  width: 75%;
 `;
 
 const ImageDiv = styled.div`
   width: 40%;
-  margin-top: -10px;
 `;
 
 const DivButton = styled.div`

@@ -92,7 +92,8 @@ const Header = () => {
 const MainDiv = styled.div`
   display: flex;
   flex-direction: column;
-  width: 30%;
+  min-height: 100vh;
+  width: 22%;
   @media (max-width: 950px) {
     width: 40%;
   }

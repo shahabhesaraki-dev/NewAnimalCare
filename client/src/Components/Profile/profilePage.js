@@ -221,6 +221,8 @@ const ProfilePage = () => {
 };
 
 const MainDiv = styled.div`
+  display: flex;
+  width: 100%;
   min-height: 100vh;
   background-image: url(${DOG});
 `;
@@ -228,22 +230,21 @@ const MainDiv = styled.div`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 100%;
+  width: 78%;
   justify-content: center;
-  padding: 30px 50px;
+  padding: 10px 20px;
 `;
 
 const ImageSection = styled.div`
   display: flex;
   flex-direction: column;
-  width: 77%;
+  width: 95%;
   min-width: 40%;
-  margin-left: 300px;
   position: relative;
 `;
 
 const BackgroundFrame = styled.div`
-  width: 100%;
+  width: 95%;
   height: 350px;
   border-radius: 10px;
   position: relative;
@@ -255,7 +256,7 @@ const NoBackground = styled.div`
   top: 0;
   right: 0;
   bottom: 0;
-  width: 90%;
+  width: 100%;
   height: 100%;
   background-color: #ccc;
   border-radius: 10px;
@@ -267,7 +268,7 @@ const BackgroundImage = styled.img`
   top: 0;
   right: 0;
   bottom: 0;
-  width: 90%;
+  width: 100%;
   height: 100%;
   border-radius: 10px;
 `;
@@ -308,19 +309,17 @@ const Name = styled.h1`
   font-family: Acme;
   font-size: 28px;
   position: relative;
-  top: -80px;
-  margin-left: 25px;
+  top: -160px;
+  margin-left: 220px;
   color: black;
 `;
 
 const PostSection = styled.div`
   display: flex;
   flex-direction: column;
-  width: 70%;
+  width: 90%;
   min-width: 40%;
-  margin-left: 300px;
   position: relative;
-  top: -20px;
   padding: 10px;
   border-radius: 15px;
   margin-top: 20px;
@@ -434,15 +433,15 @@ const Detail = styled.p`
 
 const AboutDiv = styled.div`
   position: relative;
-  left: 60px;
+  left: 55px;
   top: -20px;
   margin-top: 10px;
   border: none;
   border-radius: 60px;
   background-color: #a18763;
   padding: 20px;
-  padding-left: 30px;
-  width: 65%;
+  padding-left: 25px;
+  width: 70%;
   border: 2px solid white;
 `;
 
@@ -463,18 +462,18 @@ const AboutDetail = styled.p`
 const PostImage = styled.img`
   width: 100%;
   height: 300px;
-  margin-left: 30px;
+  margin-left: 20px;
   border-radius: 10px;
   border: 2px solid white;
 `;
 
 const FlexDiv = styled.div`
   display: flex;
-  width: 90%;
+  width: 95%;
 `;
 
 const DetailsDiv = styled.div`
-  width: 65%;
+  width: 75%;
 `;
 
 const ImageDiv = styled.div`
@@ -488,10 +487,9 @@ const DivButton = styled.div`
 
 const ButtonFlexDiv = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   position: relative;
-  width: 77%;
-  margin-left: 230px;
+  width: 90%;
   margin-bottom: 10px;
 `;
 
@@ -503,7 +501,6 @@ const Button = styled.button`
   font-size: 22px;
   background-color: transparent;
   color: black;
-  margin-left: 50px;
   margin-top: -50px;
   cursor: pointer;
 `;
@@ -511,11 +508,9 @@ const Button = styled.button`
 const OtherPostSection = styled.div`
   display: flex;
   flex-direction: column;
-  width: 69%;
+  width: 90%;
   min-width: 40%;
-  margin-left: 300px;
   position: relative;
-  top: 20px;
   padding: 30px;
   border-radius: 15px;
   margin-top: 20px;

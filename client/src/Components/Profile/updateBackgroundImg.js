@@ -85,7 +85,7 @@ const FileInput = styled.input``;
 const StyledMdAddCircleBack = styled(MdAddCircle)`
   position: absolute;
   bottom: -20px;
-  right: 95px;
+  right: -15px;
   cursor: pointer;
 `;
 
