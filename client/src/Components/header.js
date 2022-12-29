@@ -52,7 +52,11 @@ const Header = () => {
             <Li>
               <StyledNavlink to="/messages">
                 <StyledFiMessageSquare size={30} />
-                Messages
+                Messages (
+                {userData && userData.messages
+                  ? userData.messages.length
+                  : null}
+                )
               </StyledNavlink>
             </Li>
             <Li>

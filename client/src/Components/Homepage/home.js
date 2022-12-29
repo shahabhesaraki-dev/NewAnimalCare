@@ -5,6 +5,7 @@ import { DetailsContext } from "../Context/detailsContext";
 import DOG from "../../Assets/backDog.png";
 // import CAT from "../../Assets/backCat.png";
 import { useHistory } from "react-router-dom";
+import MessageButton from "../Message/messageButton";
 
 const Home = () => {
   const history = useHistory();
@@ -128,7 +129,13 @@ const Home = () => {
                         <PostImage src={`/image/${post.image}`} />
                       </DivButton>
                       <DivButton>
-                        <Button>Message me</Button>
+                        <MessageButton
+                          name={post.user.firstName.replace(
+                            /^./,
+                            post.user.firstName[0].toUpperCase()
+                          )}
+                          id={post.user.id}
+                        />
                       </DivButton>
                     </ImageDiv>
                   </FlexDiv>
@@ -329,24 +336,24 @@ const DivButton = styled.div`
   justify-content: center;
 `;
 
-const Button = styled.button`
-  font-family: "Abel";
-  width: 180px;
-  height: 50px;
-  border-radius: 10px;
-  font-size: 22px;
-  background-color: white;
-  border: 1px solid #5f4024;
-  color: #5f4024;
-  margin-left: 30px;
-  margin-top: 20px;
-  cursor: pointer;
-  &:hover {
-    transition: 200ms ease-in-out;
-    font-size: 24px;
-    box-shadow: 0px 0px 3px 1px white;
-    font-weight: 200;
-  }
-`;
+// const Button = styled.button`
+//   font-family: "Abel";
+//   width: 180px;
+//   height: 50px;
+//   border-radius: 10px;
+//   font-size: 22px;
+//   background-color: white;
+//   border: 1px solid #5f4024;
+//   color: #5f4024;
+//   margin-left: 30px;
+//   margin-top: 20px;
+//   cursor: pointer;
+//   &:hover {
+//     transition: 200ms ease-in-out;
+//     font-size: 24px;
+//     box-shadow: 0px 0px 3px 1px white;
+//     font-weight: 200;
+//   }
+// `;
 
 export default Home;

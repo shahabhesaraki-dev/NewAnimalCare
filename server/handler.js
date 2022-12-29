@@ -418,6 +418,51 @@ const updateUserInfo = async (req, res) => {
   }
 };
 
+const sendMessage = async (req, res) => {
+  const client = new MongoClient(MONGO_URI, options);
+
+  try {
+    await client.connect();
+
+    const message = req.body.message;
+    const userId = req.body.userId;
+    const senderId = req.body.senderId;
+    const senderFirstName = req.body.firstName;
+    const senderLastName = req.body.lastName;
+
+    const messageData = {
+      senderId: senderId,
+      senderFirstName: senderFirstName,
+      senderLastName: senderLastName,
+      message: message,
+    };
+
+    const db = client.db("animalCare");
+
+    const user = await db
+      .collection("users")
+      .findOne({ _id: ObjectId(userId) });
+
+    if (user) {
+      await db
+        .collection("users")
+        .updateOne(
+          { _id: ObjectId(userId) },
+          { $push: { messages: messageData } }
+        );
+
+      res.status(200).json({
+        status: 200,
+        data: messageData,
+        message: "UserInfo successfully updated!",
+      });
+    }
+    client.close();
+  } catch (err) {
+    console.log("Error: ", err);
+  }
+};
+
 module.exports = {
   addUser,
   signIn,
@@ -430,4 +475,5 @@ module.exports = {
   updateBackgroundImage,
   getAllPostButYours,
   updateUserInfo,
+  sendMessage,
 };

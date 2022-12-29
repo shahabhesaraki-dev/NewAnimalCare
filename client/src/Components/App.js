@@ -4,7 +4,7 @@ import SignIn from "./Auth/signIn";
 import GlobalStyles from "./GlobalStyles";
 import Home from "./Homepage/home";
 // import Bookmarks from "./NavPages/bookmarks";
-import Messages from "./NavPages/messages";
+import Messages from "./Message/messages";
 import ProfilePage from "./Profile/profilePage";
 import AddNewPost from "./NewPost/addNewPost";
 import Service from "./Service/service";
