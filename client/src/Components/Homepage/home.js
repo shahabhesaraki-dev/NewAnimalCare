@@ -152,7 +152,6 @@ const Section = styled.div`
   display: flex;
   flex-direction: column;
   width: 78%;
-  /* justify-content: center; */
   padding: 10px 20px;
 `;
 
@@ -162,10 +161,9 @@ const PostSection = styled.div`
   width: 90%;
   min-width: 40%;
   position: relative;
-  top: 25px;
   padding: 10px;
   border-radius: 15px;
-  margin-top: 20px;
+  margin-top: 25px;
   background-color: #d3bfa1;
   border: 2px solid black;
 `;
