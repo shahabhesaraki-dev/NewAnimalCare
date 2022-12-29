@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import {
   FiHome,
-  // FiBookmark,
   FiMessageSquare,
   FiUser,
   FiLogOut,
@@ -43,12 +42,6 @@ const Header = () => {
                 Home
               </StyledNavlink>
             </Li>
-            {/* <Li>
-              <StyledNavlink to="/bookmarks">
-                <StyledFiBookmark size={30} />
-                Bookmarks
-              </StyledNavlink>
-            </Li> */}
             <Li>
               <StyledNavlink to="/messages">
                 <StyledFiMessageSquare size={30} />
@@ -98,9 +91,6 @@ const MainDiv = styled.div`
   flex-direction: column;
   min-height: 100vh;
   width: 22%;
-  @media (max-width: 950px) {
-    width: 40%;
-  }
 `;
 
 const RightWrapper = styled.div`
@@ -149,13 +139,6 @@ const StyledFiHome = styled(FiHome)`
   position: relative;
   top: 7px;
 `;
-
-// const StyledFiBookmark = styled(FiBookmark)`
-//   margin-right: 20px;
-//   position: relative;
-//   top: 7px;
-//   color: #5f4024;
-// `;
 
 const StyledFiMessageSquare = styled(FiMessageSquare)`
   margin-right: 20px;

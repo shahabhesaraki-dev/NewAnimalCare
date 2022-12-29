@@ -11,6 +11,7 @@ const Messages = () => {
     <MainDiv>
       <Header />
       <Section>
+        <Title>Messages</Title>
         <Content>
           <Table>
             <tbody>
@@ -101,7 +102,7 @@ const Section = styled.div`
   display: flex;
   flex-direction: column;
   width: 78%;
-  margin-top: 100px;
+  margin-top: 50px;
   padding: 10px 20px;
 `;
 
@@ -113,6 +114,16 @@ const Content = styled.div`
   border: 1px solid #5f4024;
   border-radius: 10px;
   padding: 10px;
+`;
+
+const Title = styled.h1`
+  font-family: "Acme";
+  font-size: 70px;
+  text-align: center;
+  margin-bottom: 50px;
+  margin-right: 150px;
+  color: #5f4024;
+  letter-spacing: 1.5px;
 `;
 
 const Table = styled.table`
@@ -138,7 +149,7 @@ const Answer = styled.a`
   font-size: 18px;
   font-weight: 100;
   color: white;
-  background-color: green;
+  background-color: #3f8d49;
   border: 1px solid #5f4024;
   padding: 8px 18px;
   margin-right: 5px;
