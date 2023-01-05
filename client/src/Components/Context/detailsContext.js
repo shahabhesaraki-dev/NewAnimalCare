@@ -5,6 +5,7 @@ export const DetailsContext = createContext();
 
 export const DetailsContextProvider = ({ children }) => {
   const userId = JSON.parse(localStorage.getItem("userId"));
+
   const service = JSON.parse(localStorage.getItem("service"));
 
   const [userData, setUserData] = useState([]);
@@ -21,7 +22,7 @@ export const DetailsContextProvider = ({ children }) => {
       getUser();
     }
     // eslint-disable-next-line
-  }, []);
+  }, [service]);
 
   useEffect(() => {
     if (userId) {
