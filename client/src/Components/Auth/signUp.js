@@ -5,6 +5,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import Button from "@material-ui/core/Button";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SignUp = () => {
   const history = useHistory();
@@ -16,8 +18,6 @@ const SignUp = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const [error, setError] = useState("");
-
   const handleClickToOpen = () => {
     setOpen(true);
   };
@@ -27,33 +27,63 @@ const SignUp = () => {
   };
 
   const signUpHandler = () => {
-    fetch("/api/addUser", {
-      method: "Post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        username: username,
-        password: password,
-      }),
-    })
-      .then((response) => {
-        return response.json();
+    if (handleValidation()) {
+      fetch("/api/addUser", {
+        method: "Post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          username: username,
+          password: password,
+        }),
       })
-      .then((result) => {
-        if (result.status === 200) {
-          localStorage.setItem("userId", JSON.stringify(result.id));
-          history.push("/services");
-        } else {
-          setError(result.message);
-        }
-      });
+        .then((response) => {
+          return response.json();
+        })
+        .then((result) => {
+          if (result.status === 200) {
+            localStorage.setItem("userId", JSON.stringify(result.id));
+            history.push("/services");
+          } else {
+            toast.error(`${result.message}`, tostOption);
+          }
+        });
+    }
   };
 
   const splitEmail = email.split("");
+
+  const tostOption = {
+    position: "top-right",
+    autoClose: 8000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "dark",
+  };
+
+  const handleValidation = () => {
+    if (
+      password.length === 0 ||
+      email.length === 0 ||
+      firstName.length === 0 ||
+      lastName.length === 0 ||
+      username.length === 0
+    ) {
+      toast.error("All the fields are required!", tostOption);
+      return false;
+    } else if (!splitEmail.includes("@")) {
+      toast.error("Email address is not valid!", tostOption);
+      return false;
+    } else if (password.length < 3) {
+      toast.error("Password must be at least 4 characters!", tostOption);
+      return false;
+    }
+    return true;
+  };
 
   return (
     <>
@@ -61,7 +91,6 @@ const SignUp = () => {
       <Dialog open={open} onClose={handleToClose}>
         <Title style={{ marginBottom: "50px" }}>Create your account</Title>
         <DialogContent>
-          {error.length !== 0 ? <Error>{`* ${error}`}</Error> : null}
           <SignupInput
             type="text"
             placeholder="First name"
@@ -164,7 +193,8 @@ const SignUp = () => {
             }}
           />
           <br></br>
-          {firstName.length !== 0 &&
+          <DialogButton onClick={signUpHandler}>Sign up</DialogButton>
+          {/* {firstName.length !== 0 &&
           lastName.length !== 0 &&
           email.length !== 0 &&
           password.length !== 0 &&
@@ -172,12 +202,13 @@ const SignUp = () => {
             <DialogButton onClick={signUpHandler}>Sign up</DialogButton>
           ) : (
             <DialogButton disabled>Sign up</DialogButton>
-          )}
+          )} */}
         </DialogContent>
         <DialogActions>
           <CloseButton onClick={handleToClose}>Close</CloseButton>
         </DialogActions>
       </Dialog>
+      <ToastContainer />
     </>
   );
 };
@@ -266,14 +297,6 @@ const CloseButton = styled(Button)`
   color: white !important ;
   margin-top: 20px !important;
   height: 30px;
-`;
-
-const Error = styled.h2`
-  font-family: "Acme";
-  font-size: 17px;
-  color: darkred;
-  margin-left: 5px;
-  margin-bottom: 5px;
 `;
 
 export default SignUp;

@@ -3,40 +3,62 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import authImage from "../../Assets/authImage.png";
 import SignUp from "./signUp";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import GoogleLoginButton from "./google-Login-Button";
 
 const SignIn = () => {
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
   const signInHandler = () => {
-    fetch("/api/signIn", {
-      method: "Post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    })
-      .then((response) => {
-        return response.json();
+    if (handleValidation()) {
+      fetch("/api/signIn", {
+        method: "Post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
       })
-      .then((result) => {
-        if (result.status === 200) {
-          localStorage.setItem("userId", JSON.stringify(result.id));
-          history.push("/services");
-          window.location.reload();
-        } else {
-          setError(result.message);
-        }
-      });
+        .then((response) => {
+          return response.json();
+        })
+        .then((result) => {
+          if (result.status === 200) {
+            localStorage.setItem("userId", JSON.stringify(result.id));
+            history.push("/services");
+            window.location.reload();
+          } else {
+            toast.error(`${result.message}`, tostOption);
+          }
+        });
+    }
   };
 
   const splitEmail = email.split("");
+
+  const tostOption = {
+    position: "top-right",
+    autoClose: 8000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "dark",
+  };
+
+  const handleValidation = () => {
+    if (password.length === 0 || email.length === 0) {
+      toast.error("Email and Password are required!", tostOption);
+      return false;
+    } else if (!splitEmail.includes("@")) {
+      toast.error("Email address is not valid!", tostOption);
+      return false;
+    }
+    return true;
+  };
 
   return (
     <Section>
@@ -47,8 +69,6 @@ const SignIn = () => {
         <Title>Join and take care of animals</Title>
 
         <InputBox>
-          {error.length !== 0 ? <Error>{`* ${error}`}</Error> : null}
-
           <Input
             type="email"
             placeholder="Email"
@@ -57,12 +77,7 @@ const SignIn = () => {
               setEmail(e.target.value);
             }}
             onKeyDown={(e) => {
-              if (
-                e.key === "Enter" &&
-                password.length !== 0 &&
-                email.length !== 0 &&
-                splitEmail.includes("@")
-              ) {
+              if (e.key === "Enter") {
                 return signInHandler();
               }
             }}
@@ -75,23 +90,12 @@ const SignIn = () => {
               setPassword(e.target.value);
             }}
             onKeyDown={(e) => {
-              if (
-                e.key === "Enter" &&
-                password.length !== 0 &&
-                email.length !== 0 &&
-                splitEmail.includes("@")
-              ) {
+              if (e.key === "Enter") {
                 return signInHandler();
               }
             }}
           />
-          {email.length !== 0 &&
-          password.length !== 0 &&
-          splitEmail.includes("@") ? (
-            <SigninButton onClick={signInHandler}>Sign in</SigninButton>
-          ) : (
-            <SigninButton disabled>Sign in</SigninButton>
-          )}
+          <SigninButton onClick={signInHandler}>Sign in</SigninButton>
         </InputBox>
 
         {/* <GoogleLoginButton /> */}
@@ -101,6 +105,7 @@ const SignIn = () => {
           <SignUp />
         </SignupBox>
       </FormSection>
+      <ToastContainer />
     </Section>
   );
 };
@@ -190,13 +195,9 @@ const SigninButton = styled.button`
   background-color: #825e3a;
   border: none;
   color: white;
-  &:hover:enabled {
+  &:hover {
     background-color: #240d01;
     transition: 200ms ease-in-out;
-  }
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
   }
 `;
 
@@ -228,14 +229,6 @@ const H2 = styled.h2`
   font-family: "Abel";
   font-size: 20px;
   margin-left: 10px;
-`;
-
-const Error = styled.h2`
-  font-family: "Acme";
-  font-size: 17px;
-  color: darkred;
-  margin-left: 5px;
-  margin-bottom: 5px;
 `;
 
 export default SignIn;

@@ -3,6 +3,8 @@ import Header from "../header";
 import DOG from "../../Assets/backDog.png";
 import { useContext } from "react";
 import { DetailsContext } from "../Context/detailsContext";
+import AnswerButton from "./answerButton";
+import DeleteMessage from "./deleteMessage";
 
 const Messages = () => {
   const { userData } = useContext(DetailsContext);
@@ -25,7 +27,7 @@ const Messages = () => {
               {userData && userData.messages
                 ? userData.messages.map((message, index) => {
                     return (
-                      <tr index={index}>
+                      <tr key={index}>
                         <TD style={{ width: "1%", textAlign: "center" }}>
                           {index + 1}
                         </TD>
@@ -44,40 +46,14 @@ const Messages = () => {
                           dangerouslySetInnerHTML={{ __html: message.message }}
                         />
                         <TD style={{ textAlign: "center", width: "20%" }}>
-                          <Answer
-                          // onClick={() => {
-                          //   history.push({
-                          //     pathname: "/dashboard/editNews",
-                          //     state: { id: news._id },
-                          //   });
-                          // }}
-                          >
-                            Answer
-                          </Answer>
-                          <Delete
-                          // onClick={() => {
-                          //   fetch(
-                          //     `https://mynewsprojectapp.herokuapp.com/api/delete/${news._id}`,
-                          //     {
-                          //       method: "Delete",
-                          //       headers: {
-                          //         "Content-Type": "application/json",
-                          //       },
-                          //     }
-                          //   )
-                          //     .then((respond) => {
-                          //       respond.json();
-                          //     })
-                          //     .then((result) => {
-                          //       return result;
-                          //     })
-                          //     .then(() => {
-                          //       window.location.reload();
-                          //     });
-                          // }}
-                          >
-                            Delete
-                          </Delete>
+                          <AnswerButton
+                            name={message.senderFirstName.replace(
+                              /^./,
+                              message.senderFirstName[0].toUpperCase()
+                            )}
+                            id={message.senderId}
+                          />
+                          <DeleteMessage message={message.message} />
                         </TD>
                       </tr>
                     );
@@ -142,33 +118,6 @@ const TD = styled.td`
   font-weight: 600;
   border: 1px solid #5f4024;
   padding: 20px;
-`;
-
-const Answer = styled.a`
-  font-family: Abel;
-  font-size: 18px;
-  font-weight: 100;
-  color: white;
-  background-color: #3f8d49;
-  border: 1px solid #5f4024;
-  padding: 8px 18px;
-  margin-right: 5px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-`;
-
-const Delete = styled.a`
-  font-family: Abel;
-  font-size: 18px;
-  font-weight: 100;
-  color: white;
-  background-color: #eb1f28;
-  border: 1px solid #5f4024;
-  padding: 8px 18px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
 `;
 
 export default Messages;

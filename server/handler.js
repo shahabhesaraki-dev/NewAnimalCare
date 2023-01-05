@@ -48,7 +48,7 @@ const addUser = async (req, res) => {
         message: `User successfully added!`,
       });
     } else {
-      res.status(409).json({
+      res.json({
         status: 409,
         message: "This email address already exixsts!",
       });
@@ -77,15 +77,15 @@ const signIn = async (req, res) => {
           id: result._id,
         });
       } else {
-        res.status(404).json({
+        res.json({
           status: 404,
           message: "Password is incorrect!",
         });
       }
     } else {
-      res.status(404).json({
+      res.json({
         status: 404,
-        message: "We cannot find an account with that e-mail address!",
+        message: "Email address is not available!",
       });
     }
     client.close();
@@ -463,6 +463,42 @@ const sendMessage = async (req, res) => {
   }
 };
 
+const deleteMessage = async (req, res) => {
+  const client = new MongoClient(MONGO_URI, options);
+
+  try {
+    await client.connect();
+
+    const userId = req.body.userId;
+    const message = req.body.message;
+
+    console.log(message);
+
+    const db = client.db("animalCare");
+
+    const user = await db
+      .collection("users")
+      .findOne({ _id: ObjectId(userId) });
+
+    if (user) {
+      await db
+        .collection("users")
+        .updateOne(
+          { _id: ObjectId(userId) },
+          { $pull: { messages: { message: message } } }
+        );
+
+      res.status(200).json({
+        status: 200,
+        message: "Message successfully removed!",
+      });
+    }
+    client.close();
+  } catch (err) {
+    console.log("Error: ", err);
+  }
+};
+
 module.exports = {
   addUser,
   signIn,
@@ -476,4 +512,5 @@ module.exports = {
   getAllPostButYours,
   updateUserInfo,
   sendMessage,
+  deleteMessage,
 };

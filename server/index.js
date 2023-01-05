@@ -17,6 +17,7 @@ const {
   getAllPostButYours,
   updateUserInfo,
   sendMessage,
+  deleteMessage,
 } = require("./handler");
 
 const PORT = process.env.PORT || 5000;
@@ -57,6 +58,7 @@ express()
   .get("/api/getAllPostButYours/:userId/:service", getAllPostButYours)
   .patch("/api/updateUserInfo", upload.single("file"), updateUserInfo)
   .patch("/api/sendMessage", upload.single("file"), sendMessage)
+  .patch("/api/deleteMessage", upload.single("file"), deleteMessage)
 
   .get("*", (req, res) => {
     res.status(404).json({
