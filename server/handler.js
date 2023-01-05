@@ -40,8 +40,6 @@ const addUser = async (req, res) => {
         password: hashedPassword,
       });
 
-      client.close();
-
       res.status(200).json({
         status: 200,
         id: result.insertedId,

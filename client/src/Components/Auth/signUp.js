@@ -48,6 +48,7 @@ const SignUp = () => {
           if (result.status === 200) {
             localStorage.setItem("userId", JSON.stringify(result.id));
             history.push("/services");
+            window.location.reload();
           } else {
             toast.error(`${result.message}`, tostOption);
           }

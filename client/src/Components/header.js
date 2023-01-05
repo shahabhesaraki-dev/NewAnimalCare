@@ -18,7 +18,6 @@ const Header = () => {
   const logOutHandler = () => {
     window.localStorage.removeItem("userId");
     window.localStorage.removeItem("service");
-    // history.push("/");
     window.location.reload();
   };
 
@@ -45,11 +44,10 @@ const Header = () => {
             <Li>
               <StyledNavlink to="/messages">
                 <StyledFiMessageSquare size={30} />
-                Messages (
+
                 {userData && userData.messages
-                  ? userData.messages.length
-                  : null}
-                )
+                  ? `Messages(${userData.messages.length})`
+                  : "Messages"}
               </StyledNavlink>
             </Li>
             <Li>
