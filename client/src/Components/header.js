@@ -11,7 +11,7 @@ import { DetailsContext } from "./Context/detailsContext";
 import { useContext } from "react";
 
 const Header = () => {
-  const { userData } = useContext(DetailsContext);
+  const { userData, conversations } = useContext(DetailsContext);
 
   const history = useHistory();
 
@@ -45,8 +45,8 @@ const Header = () => {
               <StyledNavlink to="/messages">
                 <StyledFiMessageSquare size={30} />
 
-                {userData && userData.messages
-                  ? `Messages(${userData.messages.length})`
+                {userData && conversations && conversations.length !== 0
+                  ? `Messages(${conversations.length})`
                   : "Messages"}
               </StyledNavlink>
             </Li>

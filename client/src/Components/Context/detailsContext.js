@@ -11,6 +11,8 @@ export const DetailsContextProvider = ({ children }) => {
   const [userData, setUserData] = useState([]);
   const [allPostsButYours, setAllPostsButYours] = useState([]);
   const [getService, setGetService] = useState(service);
+  const [allMessages, setAllMessages] = useState([]);
+  const [conversations, setConverstains] = useState([]);
 
   useEffect(() => {
     if (userId) {
@@ -38,9 +40,40 @@ export const DetailsContextProvider = ({ children }) => {
     // eslint-disable-next-line
   }, [getService, userData]);
 
+  useEffect(() => {
+    if (userId) {
+      const getMessages = async () => {
+        const respond = await fetch(`/api/getMessage/${userId}`);
+        const result = await respond.json();
+        setAllMessages(result.data);
+      };
+      getMessages();
+    }
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    if (userId) {
+      const getConversations = async () => {
+        const respond = await fetch(`/api/getConversations/${userId}`);
+        const result = await respond.json();
+        setConverstains(result.data);
+      };
+      getConversations();
+    }
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <DetailsContext.Provider
-      value={{ userData, allPostsButYours, setGetService }}
+      value={{
+        userData,
+        allPostsButYours,
+        setGetService,
+        allMessages,
+        setAllMessages,
+        conversations,
+      }}
     >
       {children}
     </DetailsContext.Provider>

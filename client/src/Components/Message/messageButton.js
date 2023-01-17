@@ -20,13 +20,11 @@ const MessageButton = ({ name, id }) => {
   const sendMessage = () => {
     const formData = new FormData();
     formData.append("message", message);
-    formData.append("userId", id);
     formData.append("senderId", userData._id);
-    formData.append("firstName", userData.firstName);
-    formData.append("lastName", userData.lastName);
+    formData.append("receiverId", id);
 
     fetch("/api/sendMessage", {
-      method: "PATCH",
+      method: "POST",
       body: formData,
     })
       .then((response) => {
@@ -39,6 +37,21 @@ const MessageButton = ({ name, id }) => {
         setMessage("");
         setSuccsess(`${name} received your message.`);
       });
+
+    // fetch("/api/addConversation", {
+    //   method: "POST",
+    //   body: formData,
+    // })
+    //   .then((response) => {
+    //     return response.json();
+    //   })
+    //   .then((result) => {
+    //     return result;
+    //   })
+    //   .then(() => {
+    //     setMessage("");
+    //     setSuccsess(`${name} received your message.`);
+    //   });
   };
 
   const handleClickToOpen = () => {

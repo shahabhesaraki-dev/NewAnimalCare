@@ -8,6 +8,7 @@ import ProfilePage from "./Profile/profilePage";
 import AddNewPost from "./NewPost/addNewPost";
 import Service from "./Service/service";
 import PublicProfile from "./Profile/publicProfile";
+import Conversation from "./Message/conversation";
 
 const App = () => {
   const isLogIn = localStorage.getItem("userId");
@@ -23,6 +24,9 @@ const App = () => {
         </Route>
         <Route path="/messages">
           {isLogIn ? <Messages /> : <Redirect exact to="/" />}
+        </Route>
+        <Route path="/conversation">
+          {isLogIn ? <Conversation /> : <Redirect exact to="/" />}
         </Route>
         <Route path="/profile">
           {isLogIn ? <ProfilePage /> : <Redirect exact to="/" />}

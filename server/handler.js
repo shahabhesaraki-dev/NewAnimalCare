@@ -8,6 +8,7 @@ const util = require("util");
 const unlinkFile = util.promisify(fs.unlink);
 
 const { uploadFile, getFileStream } = require("./s3");
+const { time } = require("console");
 
 const options = {
   useNewUrlParser: true,
@@ -423,38 +424,76 @@ const sendMessage = async (req, res) => {
     await client.connect();
 
     const message = req.body.message;
-    const userId = req.body.userId;
     const senderId = req.body.senderId;
-    const senderFirstName = req.body.firstName;
-    const senderLastName = req.body.lastName;
+    const receiverId = req.body.receiverId;
 
     const messageData = {
       senderId: senderId,
-      senderFirstName: senderFirstName,
-      senderLastName: senderLastName,
+      receiverId: receiverId,
       message: message,
+    };
+
+    const conversationData = {
+      senderId: senderId,
+      receiverId: receiverId,
+      createdAt: new Date(),
     };
 
     const db = client.db("animalCare");
 
-    const user = await db
-      .collection("users")
-      .findOne({ _id: ObjectId(userId) });
+    const existedConversation = await db.collection("conversations").findOne({
+      $or: [
+        { senderId: senderId, receiverId: receiverId },
+        { senderId: receiverId, receiverId: senderId },
+      ],
+    });
 
-    if (user) {
-      await db
-        .collection("users")
-        .updateOne(
-          { _id: ObjectId(userId) },
-          { $push: { messages: messageData } }
-        );
+    if (!existedConversation) {
+      await db.collection("conversations").insertOne(conversationData);
 
+      const conversation = await db
+        .collection("conversations")
+        .findOne({ senderId: senderId, receiverId: receiverId });
+
+      await db.collection("messages").insertOne({
+        conversationId: conversation._id,
+        senderId: senderId,
+        receiverId: receiverId,
+        message: message,
+        createdAt: new Date(),
+      });
       res.status(200).json({
         status: 200,
-        data: messageData,
-        message: "UserInfo successfully updated!",
+        conversationData: conversationData,
+        messageData: {
+          conversationId: conversation._id,
+          senderId: senderId,
+          receiverId: receiverId,
+          message: message,
+        },
+        message: "Coversation and Message successfully added!",
+      });
+    } else {
+      await db.collection("messages").insertOne({
+        conversationId: existedConversation._id,
+        senderId: senderId,
+        receiverId: receiverId,
+        message: message,
+        createdAt: new Date(),
+      });
+      res.status(200).json({
+        status: 200,
+        conversationData: existedConversation,
+        messageData: {
+          conversationId: existedConversation._id,
+          senderId: senderId,
+          receiverId: receiverId,
+          message: message,
+        },
+        message: "Message successfully added!",
       });
     }
+
     client.close();
   } catch (err) {
     console.log("Error: ", err);
@@ -469,8 +508,6 @@ const deleteMessage = async (req, res) => {
 
     const userId = req.body.userId;
     const message = req.body.message;
-
-    console.log(message);
 
     const db = client.db("animalCare");
 
@@ -497,6 +534,164 @@ const deleteMessage = async (req, res) => {
   }
 };
 
+const getMessage = async (req, res) => {
+  const client = new MongoClient(MONGO_URI, options);
+
+  try {
+    await client.connect();
+
+    const userId = req.params.userId;
+
+    const db = client.db("animalCare");
+
+    const findedMessages = await db
+      .collection("messages")
+      .find({
+        $or: [{ senderId: userId }, { receiverId: userId }],
+      })
+      .toArray();
+
+    res.status(200).json({
+      status: 200,
+      data: findedMessages,
+      message: "User successfully added!",
+    });
+
+    client.close();
+  } catch (err) {
+    console.log("Error: ", err);
+  }
+};
+
+const addConversation = async (req, res) => {
+  const client = new MongoClient(MONGO_URI, options);
+
+  try {
+    await client.connect();
+
+    const senderId = req.body.senderId;
+    const receiverId = req.body.receiverId;
+
+    const messageData = {
+      senderId: senderId,
+      receiverId: receiverId,
+      createdAt: new Date(),
+    };
+
+    const db = client.db("animalCare");
+
+    const user = await db.collection("conversations").findOne({
+      $or: [
+        { senderId: senderId, receiverId: receiverId },
+        { senderId: receiverId, receiverId: senderId },
+      ],
+    });
+
+    if (!user) {
+      await db.collection("conversations").insertOne(messageData);
+      res.status(200).json({
+        status: 200,
+        data: messageData,
+        message: "Coversation successfully added!",
+      });
+    } else {
+      res.status(200).json({ message: "The conversation already exists!" });
+    }
+    client.close();
+  } catch (err) {
+    console.log("Error: ", err);
+  }
+};
+
+const getConversations = async (req, res) => {
+  const client = new MongoClient(MONGO_URI, options);
+
+  try {
+    await client.connect();
+
+    const userId = req.params.userId;
+
+    const db = client.db("animalCare");
+
+    const findedConversation = await db
+      .collection("conversations")
+      .find({
+        $or: [{ senderId: userId }, { receiverId: userId }],
+      })
+      .toArray();
+
+    res.status(200).json({
+      status: 200,
+      data: findedConversation,
+      message: "All the conversations found!",
+    });
+    // }
+    client.close();
+  } catch (err) {
+    console.log("Error: ", err);
+  }
+};
+
+const getSpecificConversation = async (req, res) => {
+  const client = new MongoClient(MONGO_URI, options);
+
+  try {
+    await client.connect();
+
+    const senderId = req.body.senderId;
+    const receiverId = req.body.receiverId;
+
+    const db = client.db("animalCare");
+
+    const findedConversation = await db.collection("conversations").findOne({
+      $or: [
+        { senderId: senderId, receiverId: receiverId },
+        { senderId: receiverId, receiverId: senderId },
+      ],
+    });
+
+    res.status(200).json({
+      status: 200,
+      data: findedConversation,
+      message: "The conversation found!",
+    });
+    // }
+    client.close();
+  } catch (err) {
+    console.log("Error: ", err);
+  }
+};
+
+const getMessagesByConversationId = async (req, res) => {
+  const client = new MongoClient(MONGO_URI, options);
+
+  try {
+    await client.connect();
+
+    const conversationId = req.params.conversationId;
+
+    const db = client.db("animalCare");
+
+    const findedMessages = await db
+      .collection("messages")
+      .find({
+        conversationId: ObjectId(conversationId),
+      })
+      .sort({ createdAt: 1 })
+      .toArray();
+
+    res.status(200).json({
+      status: 200,
+      data: findedMessages,
+      message: "All messages successfully found!",
+    });
+
+    client.close();
+  } catch (err) {
+    console.log("Error: ", err);
+  }
+};
+
 module.exports = {
   addUser,
   signIn,
@@ -511,4 +706,9 @@ module.exports = {
   updateUserInfo,
   sendMessage,
   deleteMessage,
+  getMessage,
+  addConversation,
+  getConversations,
+  getSpecificConversation,
+  getMessagesByConversationId,
 };

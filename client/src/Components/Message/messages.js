@@ -3,11 +3,10 @@ import Header from "../header";
 import DOG from "../../Assets/backDog.png";
 import { useContext } from "react";
 import { DetailsContext } from "../Context/detailsContext";
-import AnswerButton from "./answerButton";
-import DeleteMessage from "./deleteMessage";
+import UserDetailsConversation from "./userDetailsConversation";
 
 const Messages = () => {
-  const { userData } = useContext(DetailsContext);
+  const { userData, conversations } = useContext(DetailsContext);
 
   return (
     <MainDiv>
@@ -24,38 +23,19 @@ const Messages = () => {
                 <TH>Action</TH>
               </tr>
 
-              {userData && userData.messages
-                ? userData.messages.map((message, index) => {
+              {userData && conversations
+                ? conversations.map((conversation, index) => {
                     return (
-                      <tr key={index}>
-                        <TD style={{ width: "1%", textAlign: "center" }}>
-                          {index + 1}
-                        </TD>
-                        <TD style={{ width: "21%" }}>
-                          {message.senderFirstName.replace(
-                            /^./,
-                            message.senderFirstName[0].toUpperCase()
-                          )}{" "}
-                          {message.senderLastName.replace(
-                            /^./,
-                            message.senderLastName[0].toUpperCase()
-                          )}
-                        </TD>
-                        <TD
-                          style={{ width: "60%" }}
-                          dangerouslySetInnerHTML={{ __html: message.message }}
-                        />
-                        <TD style={{ textAlign: "center", width: "20%" }}>
-                          <AnswerButton
-                            name={message.senderFirstName.replace(
-                              /^./,
-                              message.senderFirstName[0].toUpperCase()
-                            )}
-                            id={message.senderId}
-                          />
-                          <DeleteMessage message={message.message} />
-                        </TD>
-                      </tr>
+                      <UserDetailsConversation
+                        key={index}
+                        row={index}
+                        id={
+                          conversation.senderId !== userData._id
+                            ? conversation.senderId
+                            : conversation.receiverId
+                        }
+                        conversationId={conversation._id}
+                      />
                     );
                   })
                 : null}
@@ -109,14 +89,6 @@ const Table = styled.table`
 const TH = styled.th`
   font-family: Acme;
   font-size: 20px;
-  padding: 20px;
-`;
-
-const TD = styled.td`
-  font-family: Abel;
-  font-size: 18px;
-  font-weight: 600;
-  border: 1px solid #5f4024;
   padding: 20px;
 `;
 
