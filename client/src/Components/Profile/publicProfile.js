@@ -7,9 +7,10 @@ import UpdateProfileImage from "./updateProfileImage";
 import UpdateBackgroundImage from "./updateBackgroundImg";
 import DOG from "../../Assets/backDog.png";
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 const PublicProfile = () => {
+  const history = useHistory();
   const location = useLocation();
   const userId = location.state.id;
   const mainUserID = JSON.parse(localStorage.getItem("userId"));
@@ -202,7 +203,15 @@ const PublicProfile = () => {
                       <PostImage src={`/image/${post.image}`} />
                     </DivButton>
                     <DivButton>
-                      <MessageButton>Message me</MessageButton>
+                      <MessageButton
+                        onClick={() =>
+                          history.push("/conversation", {
+                            senderId: post.user.id,
+                          })
+                        }
+                      >
+                        Message me
+                      </MessageButton>
                     </DivButton>
                   </ImageDiv>
                 </FlexDiv>

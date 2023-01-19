@@ -50,7 +50,7 @@ export const DetailsContextProvider = ({ children }) => {
       getMessages();
     }
     // eslint-disable-next-line
-  }, []);
+  }, [userId, userData]);
 
   useEffect(() => {
     if (userId) {
@@ -62,7 +62,7 @@ export const DetailsContextProvider = ({ children }) => {
       getConversations();
     }
     // eslint-disable-next-line
-  }, []);
+  }, [userData, userId, allMessages]);
 
   return (
     <DetailsContext.Provider

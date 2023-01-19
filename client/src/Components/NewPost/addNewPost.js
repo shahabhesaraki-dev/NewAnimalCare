@@ -93,7 +93,7 @@ const AddNewPost = () => {
               />
             </ColumnDiv>
             <ColumnDiv>
-              <Label>Year or Month:</Label>
+              <Label style={{ marginLeft: "16px" }}>Year or Month:</Label>
               <Select
                 value={specificAge || ""}
                 onChange={(e) => {

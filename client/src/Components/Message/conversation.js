@@ -21,6 +21,8 @@ const Conversation = () => {
 
   const [conversation, setConverstain] = useState([]);
 
+  const [send, setSend] = useState(false);
+
   const socket = useRef();
 
   useEffect(() => {
@@ -52,7 +54,7 @@ const Conversation = () => {
           setConverstain(result.data);
         });
     }
-  }, [userData, partner]);
+  }, [userData, partner, send]);
 
   useEffect(() => {
     socket.current = io("ws://localhost:5000");
@@ -71,6 +73,7 @@ const Conversation = () => {
   useEffect(() => {
     if (arrivalMessage && arrivalMessage.conversationId === conversation._id) {
       setAllMessages((prev) => [...prev, arrivalMessage]);
+      setArrivalMessage(null);
     }
     // eslint-disable-next-line
   }, [arrivalMessage, conversation]);
@@ -89,7 +92,7 @@ const Conversation = () => {
     formData.append("receiverId", partner._id);
 
     socket.current.emit("sendMessage", {
-      conversationId: conversation._id,
+      conversationId: conversation && conversation._id,
       senderId: userData._id,
       receiverId: partner._id,
       text: message,
@@ -103,6 +106,7 @@ const Conversation = () => {
         return response.json();
       })
       .then((result) => {
+        setSend(true);
         setAllMessages([...allMessages, result.messageData]);
         setMessage("");
         return result;
@@ -112,6 +116,12 @@ const Conversation = () => {
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [allMessages]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 0);
+  }, []);
 
   return (
     <MainDiv>
@@ -128,10 +138,11 @@ const Conversation = () => {
                 partner.lastName[0].toUpperCase()
               )}`}
           </Head>
-          <MessageDiv>
+          <MessageDiv ref={scrollRef}>
             {userData &&
               allMessages &&
               conversation &&
+              // eslint-disable-next-line
               allMessages.map((message, index) => {
                 if (message.conversationId === conversation._id) {
                   if (message.receiverId === userData._id) {
@@ -190,7 +201,7 @@ const Content = styled.div`
   grid-template-rows: 8% 82% 10%;
   overflow: hidden;
   width: 90%;
-  border: 1px solid #5f4024;
+  border: 5px solid #5f4024;
   border-radius: 10px;
   padding: 30px;
   height: 85vh;
@@ -213,7 +224,7 @@ const Head = styled.h2`
   text-align: center;
   color: #5f4024;
   letter-spacing: 1.5px;
-  border-bottom: 1px solid #5f4024;
+  border-bottom: 5px solid #5f4024;
 `;
 
 const LeftFrame = styled.div`

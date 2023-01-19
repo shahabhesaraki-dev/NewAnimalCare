@@ -44,7 +44,9 @@ const UserDetailsConversation = ({ row, id, conversationId }) => {
             user.length !== 0 &&
             user.lastName.replace(/^./, user.lastName[0].toUpperCase())}
         </TD>
-        <TD>{messages && messages.message}</TD>
+        <TD
+          dangerouslySetInnerHTML={{ __html: messages && messages.message }}
+        />
         <TD style={{ textAlign: "center", width: "40%" }}>
           <ButtonAnswer
             onClick={() =>

@@ -3,9 +3,8 @@ import Header from "../header";
 import { useContext } from "react";
 import { DetailsContext } from "../Context/detailsContext";
 import DOG from "../../Assets/backDog.png";
-// import CAT from "../../Assets/backCat.png";
 import { useHistory } from "react-router-dom";
-import MessageButton from "../Message/messageButton";
+// import MessageButton from "../Message/messageButton";
 
 const Home = () => {
   const history = useHistory();
@@ -18,14 +17,7 @@ const Home = () => {
         {allPostsButYours.length !== 0
           ? allPostsButYours.map((post, index) => {
               return (
-                <PostSection
-                  key={index}
-                  // style={{
-                  //   backgroundImage: `${
-                  //     post.petType === "Cat" ? `url(${CAT})` : `url(${CAT})`
-                  //   }`,
-                  // }}
-                >
+                <PostSection key={index}>
                   <div>
                     {post.user.profileImage ? (
                       <ThumbImage
@@ -129,13 +121,22 @@ const Home = () => {
                         <PostImage src={`/image/${post.image}`} />
                       </DivButton>
                       <DivButton>
-                        <MessageButton
+                        {/* <MessageButton
                           name={post.user.firstName.replace(
                             /^./,
                             post.user.firstName[0].toUpperCase()
                           )}
                           id={post.user.id}
-                        />
+                        /> */}
+                        <Button
+                          onClick={() =>
+                            history.push("/conversation", {
+                              senderId: post.user.id,
+                            })
+                          }
+                        >
+                          Message me
+                        </Button>
                       </DivButton>
                     </ImageDiv>
                   </FlexDiv>
@@ -336,24 +337,24 @@ const DivButton = styled.div`
   justify-content: center;
 `;
 
-// const Button = styled.button`
-//   font-family: "Abel";
-//   width: 180px;
-//   height: 50px;
-//   border-radius: 10px;
-//   font-size: 22px;
-//   background-color: white;
-//   border: 1px solid #5f4024;
-//   color: #5f4024;
-//   margin-left: 30px;
-//   margin-top: 20px;
-//   cursor: pointer;
-//   &:hover {
-//     transition: 200ms ease-in-out;
-//     font-size: 24px;
-//     box-shadow: 0px 0px 3px 1px white;
-//     font-weight: 200;
-//   }
-// `;
+const Button = styled.button`
+  font-family: "Abel";
+  width: 180px;
+  height: 50px;
+  border-radius: 10px;
+  font-size: 22px;
+  background-color: white;
+  border: 1px solid #5f4024;
+  color: #5f4024;
+  margin-left: 30px;
+  margin-top: 20px;
+  cursor: pointer;
+  &:hover {
+    transition: 200ms ease-in-out;
+    font-size: 24px;
+    box-shadow: 0px 0px 3px 1px white;
+    font-weight: 200;
+  }
+`;
 
 export default Home;
