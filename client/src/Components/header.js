@@ -101,10 +101,6 @@ const Header = () => {
                   size={30}
                   style={{ marginRight: "0px", marginBottom: "-2px" }}
                 />
-
-                {userData && conversations && conversations.length !== 0
-                  ? `(${conversations.length})`
-                  : ""}
               </StyledNavlink>
             </Li>
             <Li>
