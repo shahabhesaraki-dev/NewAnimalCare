@@ -256,6 +256,10 @@ const Wrapper = styled.div`
   width: 78%;
   justify-content: center;
   padding: 10px 20px;
+  @media (max-width: 900px) {
+    width: 88%;
+    margin-left: 20px;
+  }
 `;
 
 const ImageSection = styled.div`

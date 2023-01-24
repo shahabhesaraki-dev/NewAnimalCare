@@ -60,6 +60,10 @@ const Section = styled.div`
   width: 78%;
   margin-top: 50px;
   padding: 10px 20px;
+  @media (max-width: 900px) {
+    width: 88%;
+    margin-left: 20px;
+  }
 `;
 
 const Content = styled.div`
@@ -77,7 +81,7 @@ const Title = styled.h1`
   font-size: 70px;
   text-align: center;
   margin-bottom: 50px;
-  margin-right: 150px;
+  margin-right: 110px;
   color: #5f4024;
   letter-spacing: 1.5px;
 `;

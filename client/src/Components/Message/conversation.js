@@ -194,6 +194,10 @@ const Section = styled.div`
   width: 78%;
   margin-top: 50px;
   padding: 10px 20px;
+  @media (max-width: 900px) {
+    width: 88%;
+    margin-left: 20px;
+  }
 `;
 
 const Content = styled.div`
@@ -230,13 +234,13 @@ const Head = styled.h2`
 const LeftFrame = styled.div`
   display: flex;
   justify-content: flex-start;
-  padding: 10px 10px;
+  padding: 5px 5px;
 `;
 
 const RightFrame = styled.div`
   display: flex;
   justify-content: flex-end;
-  padding: 10px 10px;
+  padding: 5px 5px;
 `;
 
 const LeftSample = styled.h2`

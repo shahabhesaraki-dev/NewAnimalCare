@@ -23,7 +23,7 @@ const Header = () => {
 
   return (
     <MainDiv>
-      <RightWrapper>
+      <AddPostWrapper>
         <Button
           onClick={() => {
             history.push("/newPost");
@@ -31,8 +31,15 @@ const Header = () => {
         >
           Add your post
         </Button>
-      </RightWrapper>
-      <LeftWrapper>
+        <ResponsiveButton
+          onClick={() => {
+            history.push("/newPost");
+          }}
+        >
+          Post
+        </ResponsiveButton>
+      </AddPostWrapper>
+      <NavWrapper>
         <nav>
           <ul>
             <Li>
@@ -79,7 +86,46 @@ const Header = () => {
             </Li>
           </ul>
         </nav>
-      </LeftWrapper>
+      </NavWrapper>
+      <ResponsiveNavWrapper>
+        <nav>
+          <ul>
+            <Li>
+              <StyledNavlink to="/home">
+                <StyledFiHome size={30} />
+              </StyledNavlink>
+            </Li>
+            <Li>
+              <StyledNavlink to="/messages">
+                <StyledFiMessageSquare
+                  size={30}
+                  style={{ marginRight: "0px", marginBottom: "-2px" }}
+                />
+
+                {userData && conversations && conversations.length !== 0
+                  ? `(${conversations.length})`
+                  : ""}
+              </StyledNavlink>
+            </Li>
+            <Li>
+              <StyledNavlink to="/profile">
+                <StyledFiUser size={30} />
+              </StyledNavlink>
+            </Li>
+            <Li>
+              <StyledNavlink to="/services">
+                <StyledFiSetting size={30} />
+              </StyledNavlink>
+            </Li>
+            <Li>
+              <LogoutBox onClick={logOutHandler}>
+                <FiLogOut size={25} style={{ position: "relative" }} />
+                <Logout></Logout>
+              </LogoutBox>
+            </Li>
+          </ul>
+        </nav>
+      </ResponsiveNavWrapper>
     </MainDiv>
   );
 };
@@ -89,18 +135,27 @@ const MainDiv = styled.div`
   flex-direction: column;
   min-height: 100vh;
   width: 22%;
+  @media (max-width: 900px) {
+    width: 10%;
+  }
 `;
 
-const RightWrapper = styled.div`
+const AddPostWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: left;
   position: fixed;
   top: 50px;
   left: 30px;
+  @media (max-width: 900px) {
+    left: 20px;
+  }
 `;
 
 const Button = styled.button`
+  @media (max-width: 900px) {
+    display: none;
+  }
   font-family: "Abel";
   width: 180px;
   height: 50px;
@@ -117,7 +172,42 @@ const Button = styled.button`
   }
 `;
 
-const LeftWrapper = styled.div`
+const ResponsiveButton = styled.button`
+  @media (min-width: 901px) {
+    display: none;
+  }
+  font-family: "Abel";
+  width: 70px;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  font-size: 20px;
+  background-color: #d3bfa1;
+  border: 1px solid white;
+  &:hover {
+    transition: 200ms ease-in-out;
+    font-size: 23px;
+    box-shadow: 0px 0px 3px 1px #5f4024;
+    font-weight: 200;
+  }
+`;
+
+const NavWrapper = styled.div`
+  @media (max-width: 900px) {
+    display: none;
+  }
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  position: fixed;
+  top: 120px;
+  left: 0;
+`;
+
+const ResponsiveNavWrapper = styled.div`
+  @media (min-width: 901px) {
+    display: none;
+  }
   display: flex;
   flex-direction: column;
   align-items: left;

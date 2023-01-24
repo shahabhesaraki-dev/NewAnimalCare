@@ -194,6 +194,9 @@ const Title = styled.h1`
   font-family: Acme;
   font-size: 65px;
   color: #5f4024;
+  @media (max-width: 900px) {
+    font-size: 55px;
+  }
 `;
 
 const Paragraph = styled.p`

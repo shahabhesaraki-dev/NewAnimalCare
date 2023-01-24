@@ -161,6 +161,10 @@ const Section = styled.div`
   flex-direction: column;
   width: 78%;
   padding: 10px 20px;
+  @media (max-width: 900px) {
+    width: 88%;
+    margin-left: 20px;
+  }
 `;
 
 const PostSection = styled.div`

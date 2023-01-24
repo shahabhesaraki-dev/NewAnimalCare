@@ -236,6 +236,10 @@ const Content = styled.div`
   width: 78%;
   justify-content: center;
   padding: 10px 20px;
+  @media (max-width: 900px) {
+    width: 88%;
+    margin-left: 20px;
+  }
 `;
 
 const Title = styled.h1`
@@ -245,6 +249,9 @@ const Title = styled.h1`
   margin-bottom: 50px;
   margin-right: 150px;
   color: #404040;
+  @media (max-width: 900px) {
+    font-size: 60px;
+  }
 `;
 
 const Label = styled.label`
