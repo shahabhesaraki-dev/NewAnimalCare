@@ -5,6 +5,7 @@ import {
   FiUser,
   FiLogOut,
   FiSettings,
+  FiPlus,
 } from "react-icons/fi";
 import { NavLink, useHistory } from "react-router-dom";
 import { DetailsContext } from "./Context/detailsContext";
@@ -31,13 +32,20 @@ const Header = () => {
         >
           Add your post
         </Button>
-        <ResponsiveButton
+        <TabletResponsiveButton
           onClick={() => {
             history.push("/newPost");
           }}
         >
           Post
-        </ResponsiveButton>
+        </TabletResponsiveButton>
+        <MobileResponsiveButton
+          onClick={() => {
+            history.push("/newPost");
+          }}
+        >
+          <FiPlus style={{ marginTop: "3px" }} />
+        </MobileResponsiveButton>
       </AddPostWrapper>
       <NavWrapper>
         <nav>
@@ -97,10 +105,7 @@ const Header = () => {
             </Li>
             <Li>
               <StyledNavlink to="/messages">
-                <StyledFiMessageSquare
-                  size={30}
-                  style={{ marginRight: "0px", marginBottom: "-2px" }}
-                />
+                <StyledFiMessageSquare size={30} />
               </StyledNavlink>
             </Li>
             <Li>
@@ -144,7 +149,7 @@ const AddPostWrapper = styled.div`
   top: 50px;
   left: 30px;
   @media (max-width: 900px) {
-    left: 20px;
+    left: 22px;
   }
 `;
 
@@ -168,8 +173,11 @@ const Button = styled.button`
   }
 `;
 
-const ResponsiveButton = styled.button`
+const TabletResponsiveButton = styled.button`
   @media (min-width: 901px) {
+    display: none;
+  }
+  @media (max-width: 600px) {
     display: none;
   }
   font-family: "Abel";
@@ -183,6 +191,25 @@ const ResponsiveButton = styled.button`
   &:hover {
     transition: 200ms ease-in-out;
     font-size: 23px;
+    box-shadow: 0px 0px 3px 1px #5f4024;
+    font-weight: 200;
+  }
+`;
+
+const MobileResponsiveButton = styled.button`
+  @media (min-width: 601px) {
+    display: none;
+  }
+  font-family: "Abel";
+  width: 50px;
+  height: 30px;
+  border: none;
+  border-radius: 10px;
+  font-size: 20px;
+  background-color: #d3bfa1;
+  border: 1px solid white;
+  &:hover {
+    transition: 200ms ease-in-out;
     box-shadow: 0px 0px 3px 1px #5f4024;
     font-weight: 200;
   }
@@ -222,24 +249,36 @@ const StyledFiHome = styled(FiHome)`
   margin-right: 20px;
   position: relative;
   top: 7px;
+  @media (max-width: 900px) {
+    margin-right: 0px;
+  }
 `;
 
 const StyledFiMessageSquare = styled(FiMessageSquare)`
   margin-right: 20px;
   position: relative;
   top: 7px;
+  @media (max-width: 900px) {
+    margin-right: 0px;
+  }
 `;
 
 const StyledFiUser = styled(FiUser)`
   margin-right: 20px;
   position: relative;
   top: 7px;
+  @media (max-width: 900px) {
+    margin-right: 0px;
+  }
 `;
 
 const StyledFiSetting = styled(FiSettings)`
   margin-right: 20px;
   position: relative;
   top: 7px;
+  @media (max-width: 900px) {
+    margin-right: 0px;
+  }
 `;
 
 const StyledNavlink = styled(NavLink)`

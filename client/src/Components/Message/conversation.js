@@ -5,6 +5,7 @@ import { useContext, useEffect, useState, useRef } from "react";
 import { DetailsContext } from "../Context/detailsContext";
 import { useLocation } from "react-router-dom";
 import io from "socket.io-client";
+import { FiSend } from "react-icons/fi";
 
 const Conversation = () => {
   const location = useLocation();
@@ -173,7 +174,9 @@ const Conversation = () => {
               }}
               type="text"
             />
-            <Button onClick={sendMessage}>Send</Button>
+            <Button onClick={sendMessage}>
+              <StyledFiSend />
+            </Button>
           </InputDiv>
         </Content>
       </Section>
@@ -278,6 +281,9 @@ const Input = styled.input`
   outline: none;
   font-family: "Abel";
   font-size: 17px;
+  @media (max-width: 900px) {
+    width: 80%;
+  }
 `;
 const Button = styled.button`
   width: 10%;
@@ -287,6 +293,14 @@ const Button = styled.button`
   font-family: "Abel";
   font-size: 20px;
   background-color: #d3bfa1;
+  @media (max-width: 900px) {
+    width: 20%;
+  }
+`;
+
+const StyledFiSend = styled(FiSend)`
+  margin-top: 5px;
+  margin-left: -2px;
 `;
 
 export default Conversation;
