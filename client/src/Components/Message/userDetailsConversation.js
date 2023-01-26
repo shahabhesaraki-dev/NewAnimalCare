@@ -49,15 +49,16 @@ const UserDetailsConversation = ({ row, id, conversationId }) => {
         />
         <TD style={{ textAlign: "center", width: "40%" }}>
           <ButtonAnswer
-            onClick={() =>
+            onClick={() => {
               history.push("/conversation", {
                 senderId: id,
-              })
-            }
+              });
+              window.location.reload();
+            }}
           >
             Answer
           </ButtonAnswer>
-          <DeleteMessage />
+          <DeleteMessage receiverId={user._id} />
         </TD>
       </tr>
     )

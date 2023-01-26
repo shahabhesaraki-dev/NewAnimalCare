@@ -177,7 +177,7 @@ const TabletResponsiveButton = styled.button`
   @media (min-width: 901px) {
     display: none;
   }
-  @media (max-width: 600px) {
+  @media (max-width: 650px) {
     display: none;
   }
   font-family: "Abel";
@@ -197,7 +197,7 @@ const TabletResponsiveButton = styled.button`
 `;
 
 const MobileResponsiveButton = styled.button`
-  @media (min-width: 601px) {
+  @media (min-width: 651px) {
     display: none;
   }
   font-family: "Abel";

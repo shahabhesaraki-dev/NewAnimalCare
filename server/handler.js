@@ -358,7 +358,11 @@ const getAllPostButYours = async (req, res) => {
     await client.connect();
     const db = client.db("animalCare");
 
-    const allPosts = await db.collection("allPosts").find().toArray();
+    const allPosts = await db
+      .collection("allPosts")
+      .find()
+      .sort({ _id: -1 })
+      .toArray();
     const allPostsButYours = allPosts.filter((post) => {
       if (post.user.id !== userId) {
         if (service === "Day-Care") {
