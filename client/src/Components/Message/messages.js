@@ -19,7 +19,7 @@ const Messages = () => {
               <tr>
                 <TH>Row</TH>
                 <TH>Name</TH>
-                <TH>Message</TH>
+                <TH>Last Message</TH>
                 <TH>Action</TH>
               </tr>
 
